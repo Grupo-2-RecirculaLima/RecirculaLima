@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecirculaLima</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;800&family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="toast" id="toast-msg"></div>
+
+<header class="navbar">
+    <div class="navbar-container">
+        <div class="logo-area" onclick="scrollToTop()">
+            <img src="RecirculaLima.png" alt="Logo-RecirculaLima" class="brand-logo-img">
+            <span class="brand-name">RecirculaLima</span>
+        </div>
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Abrir menú">
+            <span></span><span></span><span></span>
+        </button>
+        <nav class="nav-links" id="desktop-nav">
+            <a href="#inicio">Inicio</a>
+            <a href="#segmentos">¿Quién eres?</a>
+            <a href="#impacto">Impacto</a>
+            <a href="#funcion">¿Cómo funciona?</a>
+            <a href="#Beneficios">Beneficios</a>
+            <a href="#nosotros">Sobre Nosotros</a>
+        </nav>
+        <div id="auth-nav-action">
+            <div class="auth-btn-group" id="auth-btn-group">
+                <button class="btn-login-trigger" id="open-login-btn">Iniciar Sesión</button>
+                <button class="btn-register-trigger" id="open-register-btn-nav">Registrarse</button>
+            </div>
+            <div id="session-active-area" class="hidden">
+                <div class="session-active-badge">
+                    <span id="session-user-info" class="session-user-info"></span>
+                    <button class="btn-session-logout" id="action-logout-trigger">Salir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav class="mobile-nav-drawer" id="mobile-nav-drawer">
+        <a href="#inicio" onclick="closeMobileNav()">Inicio</a>
+        <a href="#segmentos" onclick="closeMobileNav()">¿Quién eres?</a>
+        <a href="#impacto" onclick="closeMobileNav()">Impacto</a>
+        <a href="#funcion" onclick="closeMobileNav()">¿Cómo funciona?</a>
+        <a href="#Beneficios" onclick="closeMobileNav()">Beneficios</a>
+        <a href="#nosotros" onclick="closeMobileNav()">Sobre Nosotros</a>
+        <button class="mob-btn" onclick="closeMobileNav();openAuthModal('login')">Iniciar Sesión</button>
+        <button class="mob-btn" style="background:var(--accent-green);margin-top:8px;" onclick="closeMobileNav();openAuthModal('register')">Registrarse</button>
+    </nav>
+</header>
+
+<div id="landing-page">
+
+<!-- HERO: propuesta y botones de acción -->
+<section id="inicio" class="hero-section">
+    <div class="hero-container">
+        <div class="hero-left-visual">
+            <div class="hero-mockups-wrap">
+                <img src="Mockup_reciclador.png" alt="App RecirculaLima - Vista reciclador" class="hero-mockup hero-mockup--back">
+                <img src="Mockup_Ciudadano.png" alt="App RecirculaLima - Vista ciudadano" class="hero-mockup hero-mockup--front">
+            </div>
+        </div>
+        <div class="hero-right-content">
+            <span class="hero-tagline">APP DE RECICLAJE COLABORATIVO · LIMA</span>
+            <h1 class="hero-main-title">Recicla, gana puntos y <span>beneficia</span> tu barrio</h1>
+            <p class="hero-paragraph">Conecta con recicladores verificados cerca de ti. <strong>Gratis, en 2 minutos, sin papeleos.</strong></p>
+            <div class="hero-btn-row">
+             <button class="btn-cta-primary"id="open-register-btn" onclick="openModal('auth-system-overlay');setMode('register')">
+                Crear mi cuenta gratis
+             </button>
+             <button class="btn-cta-secondary" id="open-login-btn2" onclick="openModal('auth-system-overlay');setMode('login')">
+                Ya tengo cuenta
+            </button>
+            </div>
+            <div class="hero-trust-row">
+                <span>✓ Gratis para vecinos</span>
+                <span>✓ Sin registro largo</span>
+                <span>✓ Recicladores verificados</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SEGMENTACIÓN:RecirculaLima según tipo de usuario -->
+<section id="segmentos" class="segment-section">
+    <div class="segment-inner">
+        <span class="section-mini-tag">¿QUIÉN ERES TÚ?</span>
+        <h2 class="section-title-md">Elige tu ruta en RecirculaLima</h2>
+        <p class="section-desc-txt">Cada perfil tiene su propio acceso, beneficios y herramientas.</p>
+        <div class="segment-cards">
+            <div class="segment-card segment-card--highlight">
+              <div class="seg-badge">Más popular</div>
+                <div class="seg-icon">🏘️</div>
+                <h3>Soy vecino</h3>
+                <ul class="seg-list">
+                    <li>✓ Solicita recojo desde casa</li>
+                    <li>✓ Gana ReciPuntos por cada entrega</li>
+                    <li>✓ Canjea descuentos en tu barrio</li>
+                </ul>
+                <button class="btn-cta-primary btn-seg" onclick="openModal('auth-system-overlay');setMode('register');roleTabs.forEach(t=>t.classList.toggle('active',t.getAttribute('data-role')==='ciudadano'));currentRole='ciudadano';updateCtx()">
+                    Empezar a reciclar →
+                </button>
+            </div>
+            <div class="segment-card">
+                <div class="seg-icon">🚛</div>
+                <h3>Soy reciclador</h3>
+                <ul class="seg-list">
+                    <li>✓ Recibe alertas de vecinos cerca</li>
+                    <li>✓ Optimiza tu ruta diaria</li>
+                    <li>✓ Formaliza tu actividad con QR</li>
+                </ul>
+                <button class="btn-cta-primary btn-seg" onclick="openModal('auth-system-overlay');setMode('register');roleTabs.forEach(t=>t.classList.toggle('active',t.getAttribute('data-role')==='reciclador'));currentRole='reciclador';updateCtx()">
+                    Registrarme como reciclador →
+                </button>
+            </div>
+            <div class="segment-card">
+                <div class="seg-icon">🏭</div>
+                <h3>Soy centro de acopio</h3>
+                <ul class="seg-list">
+                    <li>✓ Gestiona inventario de materiales</li>
+                    <li>✓ Registra transacciones con recicladores</li>
+                    <li>✓ Consulta precios de mercado en tiempo real</li>
+                </ul>
+                <button class="btn-cta-primary btn-seg" onclick="openModal('auth-system-overlay');setMode('register');roleTabs.forEach(t=>t.classList.toggle('active',t.getAttribute('data-role')==='administrador'));currentRole='administrador';updateCtx()">
+                    Registrar mi centro →
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- IMPACTO-->
+<section id="impacto" class="metrics-section">
+    <div class="metrics-container">
+        <div>
+            <span class="section-mini-tag">EL PROBLEMA QUE RESOLVEMOS</span>
+            <h2 class="section-title-md">Perú valoriza solo el <strong style="color:var(--brand-light);">1.8%</strong> de sus residuos</h2>
+            <div class="grid-stats">
+                <div class="stat-box dark-box"><h3>1.8%</h3><p>residuos valorizados en Perú · MINAM 2023</p></div>
+                <div class="stat-box white-box"><h3>8M</h3><p>toneladas de residuos al año en Lima</p></div>
+                <div class="stat-box white-box"><h3>120K</h3><p>recicladores sin formalización ni protección</p></div>
+                <div class="stat-box dark-box"><h3>73%</h3><p>ciudadanos dispuestos a segregar con orientación</p></div>
+            </div>
+        </div>
+        <div class="metrics-right-text">
+            <h3>La mayoría de residuos van al relleno sanitario, no por falta de voluntad — sino por falta de sistema.</h3>
+            <p>RecirculaLima conecta a los vecinos que quieren reciclar con los recicladores que necesitan material. <strong>Tecnología al servicio del barrio.</strong></p>
+            <span class="source-caption">Fuente: MINAM — Plan Nacional de Gestión Integral de Residuos Sólidos 2016–2024.</span>
+        </div>
+    </div>
+</section>
+
+<!-- CÓMO FUNCIONA -->
+<section id = "funcion" class="how-section">
+    <div class="how-inner">
+        <span class="section-mini-tag">ASÍ DE SIMPLE</span>
+        <h2 class="section-title-md">Empieza a reciclar en 3 pasos</h2>
+        <div class="steps-row">
+            <div class="step-card">
+                <div class="step-num">1</div>
+                <div class="step-icon">📝</div>
+                <h4>Publica tu solicitud</h4>
+                <p>Indica qué materiales tienes y cuándo estás disponible. Tarda menos de 1 minuto.</p>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="step-card">
+                <div class="step-num">2</div>
+                <div class="step-icon">🚛</div>
+                <h4>Un reciclador acepta</h4>
+                <p>El reciclador más cercano llega a tu dirección en el horario acordado.</p>
+            </div>
+            <div class="step-arrow">→</div>
+            <div class="step-card">
+                <div class="step-num">3</div>
+                <div class="step-icon">💳</div>
+                <h4>Ganas ReciPuntos</h4>
+                <p>Tus puntos se acreditan al instante. Canjéalos en comercios del barrio.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BENEFICIOS PARA CIUDADANOS -->
+<section id="Beneficios" class="rewards-section">
+    <span class="section-mini-tag">PARA CIUDADANOS</span>
+    <h2 class="section-title-md">Tu reciclaje tiene un valor real</h2>
+    <p class="section-desc-txt">Cada kg que entregas se convierte en <strong>ReciPuntos</strong> canjeables en tu comunidad.</p>
+    <div class="cards-grid-layout">
+        <div class="info-feature-card">
+            <div class="card-icon-bubble">♻️</div>
+            <h3>Entrega y gana ReciPuntos</h3>
+            <ul class="card-scan-list">
+                <li>✓ Puntos al instante tras validación QR</li>
+                <li>✓ Sin trámites ni espera</li>
+                <li>✓ Historial de recojos</li>
+            </ul>
+            <button class="btn-cta-primary btn-sm" id="trigger-qr-generator">Ver cómo funciona el QR</button>
+        </div>
+        <div class="info-feature-card">
+            <div class="card-icon-bubble">🏪</div>
+            <h3>Descuentos en tu barrio</h3>
+            <ul class="card-scan-list">
+                <li>✓ Bodegas, farmacias y restaurantes socios</li>
+                <li>✓ Beneficios que se quedan en tu barrio</li>
+                <li>✓ Sin tarjetas físicas</li>
+            </ul>
+            <button class="btn-cta-primary btn-sm" id="btn-red-local" onclick="openModal('modal-descuentos')">Ver red local</button>
+        </div>
+        <div class="info-feature-card">
+            <div class="card-icon-bubble">📍</div>
+            <h3>Recicladores cerca, ahora</h3>
+            <ul class="card-scan-list">
+                <li>✓ Menos de 500m de tu casa</li>
+                <li>✓ Horarios confirmados en tiempo real</li>
+                <li>✓ Todos verificados y calificados</li>
+            </ul>
+            <button class="btn-cta-primary btn-sm" id="btn-ver-horarios" onclick="openModal('modal-horarios')">Ver horarios</button>
+        </div>
+    </div>
+    <div style="text-align:center;margin-top:36px;">
+        <button class="btn-cta-primary" onclick="openModal('auth-system-overlay');setMode('register')">Registrarme como ciudadano</button>
+    </div>
+</section>
+
+<!-- BENEFICIOS PARA RECICLADORES -->
+<section id="recicladores" class="recycler-segment-section">
+    <div class="recycler-container">
+        <div>
+            <span class="section-mini-tag">PARA RECICLADORES</span>
+            <h2 class="section-title-md">Más material. Menos recorrido. Más ingresos.</h2>
+            <div class="feature-rows-list">
+                <div class="feature-row-item"><div class="row-icon">🗺️</div><div><h4>Rutas optimizadas automáticamente</h4><p>Orden de visitas calculado para minimizar tu recorrido.</p></div></div>
+                <div class="feature-row-item"><div class="row-icon">🔒</div><div><h4>Perfil verificado y descargable</h4><p>Acredita tu trabajo ante compradores y cooperativas.</p></div></div>
+                <div class="feature-row-item"><div class="row-icon">📊</div><div><h4>Dashboard de metas en tiempo real</h4><p>Ve cuánto has recolectado y qué tan cerca estás de tu meta diaria.</p></div></div>
+                <div class="feature-row-item"><div class="row-icon">✅</div><div><h4>Registro de material con QR</h4><p>Cada entrega queda registrada: fecha, peso, tipo de material.</p></div></div>
+            </div>
+            <button class="btn-cta-primary" style="margin-top:24px;" onclick="openModal('auth-system-overlay');setMode('register');roleTabs.forEach(t=>t.classList.toggle('active',t.getAttribute('data-role')==='reciclador'));currentRole='reciclador';updateCtx()">
+                Registrarme como reciclador
+            </button>
+        </div>
+        <div style="display:flex;justify-content:center;align-items:center;">
+            <img src="Mockup_reciclador.png" alt="App RecirculaLima - Reciclador" class="section-mockup-img">
+        </div>
+    </div>
+</section>
+
+<!-- BENEFICIOS PARA CENTROS DE ACOPIO -->
+<section id="acopio" class="acopio-segment-section">
+    <div class="recycler-container">
+        <div style="display:flex;justify-content:center;align-items:center;">
+            <img src="Mockup_centro.png" alt="App RecirculaLima - Centro de Acopio" class="section-mockup-img">
+        </div>
+        <div>
+            <span class="section-mini-tag">PARA CENTROS DE ACOPIO</span>
+            <h2 class="section-title-md">Gestiona tu centro, conecta con más recicladores.</h2>
+            <div class="feature-rows-list">
+                <div class="feature-row-item">
+                    <div class="row-icon">📦</div>
+                    <div><h4>Control de inventario en tiempo real</h4><p>Registra entradas de material por tipo, peso y reciclador. Todo en un solo panel.</p></div>
+                </div>
+                <div class="feature-row-item">
+                    <div class="row-icon">💰</div>
+                    <div><h4>Registro de transacciones con recicladores</h4><p>Lleva el historial de pagos y entregas con cada operador que trabaja contigo.</p></div>
+                </div>
+                <div class="feature-row-item">
+                    <div class="row-icon">📈</div>
+                    <div><h4>Precios de mercado actualizados</h4><p>Consulta diariamente los precios referenciales de Lima para tomar mejores decisiones de compra.</p></div>
+                </div>
+                <div class="feature-row-item">
+                    <div class="row-icon">🚛</div>
+                    <div><h4>Red de recicladores proveedores</h4><p>Accede a perfiles verificados, calificaciones y volumen de entrega de cada reciclador.</p></div>
+                </div>
+            </div>
+            <button class="btn-cta-primary" style="margin-top:24px;"
+                onclick="openModal('auth-system-overlay');setMode('register');roleTabs.forEach(t=>t.classList.toggle('active',t.getAttribute('data-role')==='administrador'));currentRole='administrador';updateCtx()">
+                Registrar mi centro →
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- ⑦ SOBRE NOSOTROS -->
+<section id="nosotros" class="about-section">
+    <h2 class="center-title">Sobre Nosotros</h2>
+    <p class="center-subtitle">Creemos que la tecnología puede transformar la gestión de residuos y construir una ciudad más sostenible.</p>
+    <div class="about-grid">
+        <div class="about-card"><div class="about-icon">🎯</div><h4>Misión</h4><p>Impulsar la transformación ambiental del Perú mediante soluciones tecnológicas que conecten a la comunidad y optimicen la gestión de residuos.</p></div>
+        <div class="about-card"><div class="about-icon">🚀</div><h4>Visión</h4><p>Ser la organización líder en tecnologías para la economía circular en Perú para el 2030.</p></div>
+        <div class="about-card"><div class="about-icon">🌱</div><h4>Valores</h4><p>Sostenibilidad, innovación, inclusión social, colaboración comunitaria, transparencia y ética.</p></div>
+    </div>
+</section>
+
+<!-- ⑨ CTA FINAL: repetición del CTA primario -->
+<section class="cta-bottom-section">
+    <span class="cta-pre">ÚNETE HOY — ES GRATIS</span>
+    <h2>¿Listo para reciclar con propósito?</h2>
+    <p>Únete a los vecinos de Lima que ya están convirtiendo sus residuos en beneficios.</p>
+    <div class="cta-final-btns">
+        <button class="btn-cta-primary btn-cta-lg" onclick="openModal('auth-system-overlay');setMode('register')">Crear mi cuenta gratis →</button>
+        <button class="btn-cta-ghost" onclick="openModal('auth-system-overlay');setMode('login')">Ya tengo cuenta</button>
+    </div>
+    <div class="cta-store-row">
+        <button class="btn-store-sm" id="btn-ios">🍎 iOS</button>
+        <button class="btn-store-sm" id="btn-android">🤖 Android</button>
+    </div>
+</section>
+
+<footer class="main-footer">
+    <div class="footer-links">
+        <a href="#" id="footer-contacto">Contacto</a>
+        <span>•</span>
+        <a href="#" id="footer-privacidad">Política de privacidad</a>
+        <span>•</span>
+        <a href="#" id="footer-terminos">Términos de uso</a>
+        <span>•</span>
+        <a href="#" id="footer-recicladores-link">Para recicladores</a>
+    </div>
+    <p class="footer-copyright">© 2026 RecirculaLima - Lima, Perú</p>
+</footer>
+</div>
+
+<!-- DASHBOARD CIUDADANO -->
+<div id="dash-ciudadano" class="hidden">
+<div class="dash-wrapper">
+  <aside class="dash-sidebar">
+    <div class="dash-logo"><img src="1.jpg" alt="logo" class="brand-logo-img"></div>
+    <nav class="dash-nav">
+      <a href="#" class="dash-link active" onclick="dashTab(event,'dc-home')">🏠 Inicio</a>
+      <a href="#" class="dash-link" onclick="dashTab(event,'dc-solicitar')">📦 Solicitar Recojo</a>
+      <a href="#" class="dash-link" onclick="dashTab(event,'dc-puntos')">💳 ReciPuntos</a>
+      <a href="#" class="dash-link" onclick="dashTab(event,'dc-mapa')">🗺️ Mapa</a>
+      <a href="#" class="dash-link" onclick="dashTab(event,'dc-guia')">📖 Guía</a>
+      <a href="#" class="dash-link" onclick="dashTab(event,'dc-perfil')">👤 Mi Perfil</a>
+    </nav>
+    <button class="dash-logout-btn" id="action-logout-trigger2">Cerrar sesión</button>
+  </aside>
+  <main class="dash-main">
+
+    <section id="dc-home" class="dash-tab active">
+      <div class="dash-topbar"><h2>¡Hola, <span id="dash-ciudadano-name"></span>! 👋</h2><span class="dash-date" id="dash-date-c"></span></div>
+      <div class="dash-cards-row dash-cards-3col">
+        <div class="dash-stat-card green"><div class="dsc-icon">💳</div><div><div class="dsc-val">120</div><div class="dsc-lbl">ReciPuntos</div></div></div>
+        <div class="dash-stat-card green"><div class="dsc-icon">♻️</div><div><div class="dsc-val">8</div><div class="dsc-lbl">Recojos realizados</div></div></div>
+        <div class="dash-stat-card green"><div class="dsc-icon">🌿</div><div><div class="dsc-val">14.5 kg</div><div class="dsc-lbl">Material reciclado</div></div></div>
+      </div>
+      <div class="dash-row-2col">
+        <div class="dash-panel">
+          <h3>📍 Estado de tu último recojo</h3>
+          <div class="recojo-status-bar">
+            <div class="rsb-step done">📝<span>Publicado</span></div>
+            <div class="rsb-line done"></div>
+            <div class="rsb-step done">✅<span>Aceptado</span></div>
+            <div class="rsb-line done"></div>
+            <div class="rsb-step active">🚛<span>En camino</span></div>
+            <div class="rsb-line"></div>
+            <div class="rsb-step">📦<span>Completado</span></div>
+          </div>
+          <div class="reciclador-asignado">
+            <div class="rec-av">♻️</div>
+            <div><strong>Carlos Mendoza</strong><br><small>🗓️ Llega en ~12 min • 320m</small></div>
+            <button class="btn-small-green" onclick="showToast('💬 Chat con Carlos abierto','info')">Chat</button>
+          </div>
+        </div>
+        <div class="dash-panel">
+          <h3>🎁 Beneficios disponibles</h3>
+          <div class="benefit-list">
+            <div class="benefit-item"><span class="bi-icon">🍞</span><div><strong>Bodega La Esquina</strong><small>10% descuento</small></div><span class="bi-pts">150 pts</span><button class="btn-canjear" onclick="showToast('🎉 ¡Cupón generado!','success')">Canjear</button></div>
+            <div class="benefit-item"><span class="bi-icon">💊</span><div><strong>Farmacia BienSalud</strong><small>S/. 5 descuento</small></div><span class="bi-pts">200 pts</span><button class="btn-canjear" onclick="showToast('🎉 ¡Cupón generado!','success')">Canjear</button></div>
+            <div class="benefit-item"><span class="bi-icon">🍽️</span><div><strong>Rest. El Verde</strong><small>Menú gratis</small></div><span class="bi-pts">300 pts</span><button class="btn-canjear" onclick="showToast('🎉 ¡Cupón generado!','success')">Canjear</button></div>
+          </div>
+          <button class="btn-ver-mas" onclick="document.querySelector('#dash-ciudadano .dash-link:nth-child(4)').click()">Ver todos →</button>
+        </div>
+      </div>
+      <div class="dash-panel" style="margin-top:20px;">
+        <h3>🌱 Mi impacto ambiental</h3>
+        <div class="impact-row">
+          <div class="impact-item"><div class="ii-val">14.5 kg</div><div class="ii-lbl">Material reciclado</div></div>
+          <div class="impact-item"><div class="ii-val">8</div><div class="ii-lbl">Entregas validadas</div></div>
+          <div class="impact-item"><div class="ii-val">29 kg</div><div class="ii-lbl">CO₂ evitado</div></div>
+          <div class="impact-item"><div class="ii-val">3 🌳</div><div class="ii-lbl">Árboles equivalentes</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="dc-solicitar" class="dash-tab">
+      <div class="dash-topbar"><h2>📦 Solicitar Recojo</h2></div>
+      <div class="dash-row-2col">
+        <div class="dash-panel">
+          <h3>Nueva solicitud de recojo</h3>
+          <p style="font-size:13px;color:var(--slate-text);margin-bottom:16px;">Completa los campos y un reciclador de tu zona recibirá la alerta.</p>
+          <div class="form-input-group" style="margin-bottom:12px;"><label>Tipo de residuo *</label>
+            <div class="material-chips">
+              <button class="chip" onclick="toggleChip(this)">🧴 Plástico</button>
+              <button class="chip" onclick="toggleChip(this)">📄 Papel</button>
+              <button class="chip" onclick="toggleChip(this)">📦 Cartón</button>
+              <button class="chip" onclick="toggleChip(this)">🍶 Vidrio</button>
+              <button class="chip" onclick="toggleChip(this)">🔩 Metal</button>
+            </div>
+          </div>
+          <div class="form-input-group" style="margin-bottom:12px;"><label>Tu dirección *</label><input type="text" placeholder="Ej. Jr. Libertad 120, Surco" id="sol-dir"></div>
+          <div class="form-double-row">
+            <div class="form-input-group flex-item"><label>Fecha preferida</label><input type="date" id="sol-fecha"></div>
+            <div class="form-input-group flex-item"><label>Horario preferido</label>
+              <select id="sol-hora"><option>Mañana (8am–12pm)</option><option>Tarde (1pm–5pm)</option><option>Noche (5pm–8pm)</option></select>
+            </div>
+          </div>
+          <div class="form-input-group" style="margin:12px 0;"><label>Foto del material (opcional)</label><input type="file" accept="image/*" style="padding:6px;font-size:12px;"></div>
+          <button class="btn-submit-auth" onclick="solicitarRecojo()">📢 Publicar Solicitud</button>
+        </div>
+        <div class="dash-panel">
+          <h3>📋 Recojos pasados</h3>
+          <p style="font-size:12px;color:var(--slate-text);margin-bottom:14px;">Historial de tus últimas solicitudes publicadas.</p>
+          <div class="recojos-pasados-list">
+            <div class="recojo-pasado-item">
+              <div class="rp-estado completado">✅</div>
+              <div class="rp-info">
+                <strong>Plástico, Papel</strong>
+                <span>Carlos M. • 20/06/2026</span>
+                <small>Jr. Libertad 120, Surco</small>
+              </div>
+              <span class="pts-pos rp-pts">+30 pts</span>
+            </div>
+            <div class="recojo-pasado-item">
+              <div class="rp-estado completado">✅</div>
+              <div class="rp-info">
+                <strong>Cartón</strong>
+                <span>Rosa C. • 15/06/2026</span>
+                <small>Jr. Libertad 120, Surco</small>
+              </div>
+              <span class="pts-pos rp-pts">+25 pts</span>
+            </div>
+            <div class="recojo-pasado-item">
+              <div class="rp-estado en-proceso">🚛</div>
+              <div class="rp-info">
+                <strong>Vidrio, Metal</strong>
+                <span>Evans S. • 10/06/2026</span>
+                <small>Jr. Libertad 120, Surco</small>
+              </div>
+              <span class="badge-status en-proceso rp-badge">En camino</span>
+            </div>
+            <div class="recojo-pasado-item">
+              <div class="rp-estado cancelado">❌</div>
+              <div class="rp-info">
+                <strong>Papel</strong>
+                <span>Carlos M. • 05/06/2026</span>
+                <small>Jr. Libertad 120, Surco</small>
+              </div>
+              <span class="badge-status cancelado rp-badge">Cancelado</span>
+            </div>
+            <div class="recojo-pasado-item">
+              <div class="rp-estado completado">✅</div>
+              <div class="rp-info">
+                <strong>Plástico</strong>
+                <span>Rosa C. • 01/06/2026</span>
+                <small>Jr. Libertad 120, Surco</small>
+              </div>
+              <span class="pts-pos rp-pts">+20 pts</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--RECIPUNTOS-->
+    <section id="dc-puntos" class="dash-tab">
+      <div class="dash-topbar"><h2>💳 Mi Billetera Digital</h2></div>
+      <div class="dash-cards-row">
+        <div class="dash-stat-card green" style="flex:2;"><div class="dsc-icon" style="font-size:32px;">💳</div><div><div class="dsc-val" style="font-size:36px;">120</div><div class="dsc-lbl">ReciPuntos disponibles</div><small style="color:rgba(255,255,255,.6);">⚠️ 20 pts vencen en 7 días</small></div></div>
+        <div class="dash-stat-card white"><div class="dsc-icon">📈</div><div><div class="dsc-val">+195</div><div class="dsc-lbl">Ganados este mes</div></div></div>
+        <div class="dash-stat-card white"><div class="dsc-icon">🎁</div><div><div class="dsc-val">3</div><div class="dsc-lbl">Canjes realizados</div></div></div>
+      </div>
+      <div class="dash-row-2col" style="margin-top:20px;">
+        <div class="dash-panel">
+          <h3>📜 Historial de movimientos</h3>
+          <table class="dash-table">
+            <thead><tr><th>Fecha</th><th>Detalle</th><th>Puntos</th></tr></thead>
+            <tbody>
+              <tr><td>15/06</td><td>Entrega Cartón — Carlos M.</td><td class="pts-pos">+30</td></tr>
+              <tr><td>10/06</td><td>Entrega Vidrio+Metal — Evans S.</td><td class="pts-pos">+45</td></tr>
+              <tr><td>08/06</td><td>Canje: Bodega La Esquina</td><td class="pts-neg">-150</td></tr>
+              <tr><td>01/06</td><td>Entrega Plástico — Rosa C.</td><td class="pts-pos">+25</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="dash-panel">
+          <h3>🎁 Catálogo de beneficios</h3>
+          <div class="benefit-list">
+            <div class="benefit-item"><span class="bi-icon">🍞</span><div><strong>Bodega La Esquina</strong><small>10% descuento</small></div><span class="bi-pts">150 pts</span><button class="btn-canjear" onclick="showToast('🎉 ¡Cupón generado!','success')">Canjear</button></div>
+            <div class="benefit-item"><span class="bi-icon">💊</span><div><strong>Farmacia BienSalud</strong><small>S/. 5 descuento</small></div><span class="bi-pts">200 pts</span><button class="btn-canjear" onclick="showToast('⚠️ Puntos insuficientes','warning')">Canjear</button></div>
+            <div class="benefit-item"><span class="bi-icon">☕</span><div><strong>Café Recicla & Toma</strong><small>Café gratis</small></div><span class="bi-pts">80 pts</span><button class="btn-canjear" onclick="showToast('🎉 ¡Cupón generado!','success')">Canjear</button></div>
+            <div class="benefit-item"><span class="bi-icon">🍽️</span><div><strong>Rest. El Verde</strong><small>Menú gratis</small></div><span class="bi-pts">300 pts</span><button class="btn-canjear" onclick="showToast('⚠️ Puntos insuficientes','warning')">Canjear</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="dc-mapa" class="dash-tab">
+      <div class="dash-topbar"><h2>🗺️ Recicladores cercanos</h2></div>
+      <div class="dash-row-2col">
+        <div class="dash-panel" style="background:#1A2218;min-height:340px;position:relative;overflow:hidden;">
+          <div style="position:absolute;inset:0;display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(6,1fr);"><div id="mapgrid"></div></div>
+          <div style="position:absolute;top:50%;left:48%;font-size:22px;transform:translate(-50%,-50%);">📍<br><small style="color:var(--brand-light);font-size:9px;">Tú</small></div>
+          <div style="position:absolute;top:35%;left:60%;font-size:18px;">♻️<br><small style="color:#fff;font-size:9px;">Carlos</small></div>
+          <div style="position:absolute;top:65%;left:30%;font-size:18px;">🌿<br><small style="color:#fff;font-size:9px;">Rosa</small></div>
+          <div style="position:absolute;top:25%;left:25%;font-size:18px;">🚛<br><small style="color:#fff;font-size:9px;">Evans</small></div>
+          <div style="position:absolute;bottom:12px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.5);padding:6px 14px;border-radius:20px;font-size:11px;color:#fff;">3 recicladores activos en tu zona</div>
+        </div>
+        <div class="dash-panel">
+          <h3>Recicladores disponibles cerca de ti</h3>
+          <div class="recycler-list">
+            <div class="recycler-item">
+              <div class="recycler-avatar">♻️</div>
+              <div class="recycler-info"><h4>Carlos Mendoza</h4><p>🗓️ Hoy 2pm–5pm • 320m</p><span class="recycler-badge">✅ Verificado • ⭐ 4.9</span></div>
+              <button class="btn-conocer" onclick="abrirPerfilReciclador('Carlos Mendoza','320m','Hoy 2pm–5pm','4.9','42','Plástico, Papel','fotos/carlos.jpg')">Conocer</button>
+            </div>
+            <div class="recycler-item">
+              <div class="recycler-avatar">🌿</div>
+              <div class="recycler-info"><h4>Rosa Castillo</h4><p>🗓️ Hoy 3pm–6pm • 480m</p><span class="recycler-badge">✅ Verificada • ⭐ 4.7</span></div>
+              <button class="btn-conocer" onclick="abrirPerfilReciclador('Rosa Castillo','480m','Hoy 3pm–6pm','4.7','38','Cartón, Vidrio','fotos/rosa.jpg')">Conocer</button>
+            </div>
+            <div class="recycler-item">
+              <div class="recycler-avatar">🚛</div>
+              <div class="recycler-info"><h4>Evans Soto</h4><p>🗓️ Mañana 8am–11am • 490m</p><span class="recycler-badge">✅ Verificado • ⭐ 4.8</span></div>
+              <button class="btn-conocer" onclick="abrirPerfilReciclador('Evans Soto','490m','Mañana 8am–11am','4.8','55','Plástico, Metal','fotos/evans.jpg')">Conocer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="dc-perfil" class="dash-tab">
+      <div class="dash-topbar"><h2>👤 Mi Perfil</h2></div>
+      <div class="dash-row-2col">
+        <div class="dash-panel">
+          <div class="perfil-header"><div class="perfil-avatar">👤</div><div><h3 id="dc-perfil-name"></h3><small style="color:var(--slate-text);">Ciudadano Verificado</small></div></div>
+          <div class="form-input-group" style="margin-top:16px;"><label>Nombre completo</label><input type="text" value="Carlos López" id="pf-c-nombre"></div>
+          <div class="form-input-group" style="margin-top:10px;"><label>Celular</label><input type="tel" value="999888777" id="pf-c-cel"></div>
+          <div class="form-input-group" style="margin-top:10px;"><label>Correo electrónico</label><input type="email" value="carlos@correo.com" id="pf-c-email" disabled style="background:#f1f5f9;"></div>
+          <button class="btn-submit-auth" style="margin-top:14px;" onclick="showToast('✅ Perfil actualizado correctamente','success')">Guardar cambios</button>
+        </div>
+        <div class="dash-panel">
+          <h3>📊 Resumen de actividad</h3>
+          <div class="impact-row" style="flex-wrap:wrap;gap:12px;">
+            <div class="impact-item"><div class="ii-val">8</div><div class="ii-lbl">Recojos</div></div>
+            <div class="impact-item"><div class="ii-val">120</div><div class="ii-lbl">ReciPuntos</div></div>
+            <div class="impact-item"><div class="ii-val">14.5 kg</div><div class="ii-lbl">Reciclado</div></div>
+            <div class="impact-item"><div class="ii-val">Nivel 2</div><div class="ii-lbl">Ciudadano Verde</div></div>
+          </div>
+          <h3 style="margin-top:20px;">⚙️ Configuración</h3>
+          <div class="config-row"><span>🔔 Notificaciones de recojo</span><label class="toggle"><input type="checkbox" checked><span class="slider"></span></label></div>
+          <div class="config-row"><span>📍 Alertas de recicladores cercanos</span><label class="toggle"><input type="checkbox" checked><span class="slider"></span></label></div>
+          <div class="config-row"><span>⏰ Avisos de ReciPuntos por vencer</span><label class="toggle"><input type="checkbox" checked><span class="slider"></span></label></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="dc-guia" class="dash-tab">
+      <div class="dash-topbar"><h2>📖 Guía de Reciclaje</h2></div>
+      <p style="font-size:14px;color:var(--slate-text);margin-bottom:24px;">Aprende qué puedes reciclar, cómo preparar tus materiales y cómo ganar más ReciPuntos.</p>
+      <div class="guia-grid">
+
+        <div class="guia-card">
+          <div class="guia-card-header">
+            <span class="guia-icon">🧴♻️</span>
+            <h3>¿Qué materiales podemos reciclar?</h3>
+          </div>
+          <div class="guia-body">
+            <div class="guia-material"><span class="gm-icon">🧴</span><div><strong>Plástico</strong><p>Botellas PET, envases de limpieza, tapas. Deben estar limpios y sin líquido.</p></div></div>
+            <div class="guia-material"><span class="gm-icon">📄</span><div><strong>Papel y cartón</strong><p>Periódicos, revistas, cajas de cartón. Sin grasa ni humedad.</p></div></div>
+            <div class="guia-material"><span class="gm-icon">🍶</span><div><strong>Vidrio</strong><p>Botellas y frascos de vidrio. Sin tapa metálica y bien enjuagados.</p></div></div>
+            <div class="guia-material"><span class="gm-icon">🔩</span><div><strong>Metal</strong><p>Latas de aluminio, conservas, tapas metálicas. Aplastadas si es posible.</p></div></div>
+            <div class="guia-material"><span class="gm-icon">📱</span><div><strong>Electrónicos</strong><p>Celulares, cables, baterías. Requieren punto de acopio especial.</p></div></div>
+          </div>
+        </div>
+
+        <div class="guia-card">
+          <div class="guia-card-header">
+            <span class="guia-icon">📦✅</span>
+            <h3>¿Cómo debemos entregar nuestros materiales?</h3>
+          </div>
+          <div class="guia-body">
+            <div class="guia-step"><span class="gs-num">1</span><div><strong>Limpia los envases</strong><p>Enjuaga botellas y frascos antes de entregarlos. Evita residuos de comida o líquidos.</p></div></div>
+            <div class="guia-step"><span class="gs-num">2</span><div><strong>Separa por tipo</strong><p>Agrupa plástico con plástico, papel con papel. Facilita el trabajo del reciclador.</p></div></div>
+            <div class="guia-step"><span class="gs-num">3</span><div><strong>Aplasta lo que puedas</strong><p>Botellas y latas aplastadas ocupan menos espacio y son más fáciles de transportar.</p></div></div>
+            <div class="guia-step"><span class="gs-num">4</span><div><strong>Publica tu solicitud</strong><p>Indica el tipo de material y el horario disponible desde "Solicitar Recojo".</p></div></div>
+          </div>
+        </div>
+
+        <div class="guia-card guia-card--rojo">
+          <div class="guia-card-header">
+            <span class="guia-icon">🚫❌</span>
+            <h3>¿Qué materiales NO se aceptan?</h3>
+          </div>
+          <div class="guia-body">
+            <div class="guia-material"><span class="gm-icon">🍕</span><div><strong>Residuos con comida</strong><p>Envases con restos de comida o aceite no pueden reciclarse directamente.</p></div></div>
+            <div class="guia-material"><span class="gm-icon">🩺</span><div><strong>Residuos médicos</strong><p>Jeringas, medicamentos vencidos y material hospitalario. Requieren gestión especial.</p></div></div>
+            <div class="guia-material"><span class="gm-icon">🧻</span><div><strong>Papel higiénico y pañales</strong><p>No son reciclables por su nivel de contaminación orgánica.</p></div></div>
+            <div class="guia-material"><span class="gm-icon">🪟</span><div><strong>Vidrio templado o roto</strong><p>Espejos, vidrio de ventana o pyrex no van junto al vidrio reciclable común.</p></div></div>
+          </div>
+        </div>
+
+        <div class="guia-card guia-card--dorado">
+          <div class="guia-card-header">
+            <span class="guia-icon">💳⭐</span>
+            <h3>¿Cómo gano y canjeo mis ReciPuntos?</h3>
+          </div>
+          <div class="guia-body">
+            <div class="guia-step"><span class="gs-num gs-num--gold">1</span><div><strong>Entrega material al reciclador</strong><p>El reciclador escanea tu código QR al recoger. Los puntos se acreditan automáticamente.</p></div></div>
+            <div class="guia-step"><span class="gs-num gs-num--gold">2</span><div><strong>Acumula ReciPuntos</strong><p>Cada kg de material limpio entregado genera puntos. Revisa tu saldo en "ReciPuntos".</p></div></div>
+            <div class="guia-step"><span class="gs-num gs-num--gold">3</span><div><strong>Canjea en comercios socios</strong><p>Usa tus puntos en bodegas, farmacias y restaurantes de la red RecirculaLima.</p></div></div>
+            <div class="guia-tip">💡 <strong>Tip:</strong> Cuanto más limpio y separado entregues el material, más rápido valida el reciclador y más puntos acumulas.</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+</div>
+</div>
+
+<!-- DASHBOARD RECICLADOR -->
+<div id="dash-reciclador" class="hidden">
+<div class="dash-wrapper">
+  <aside class="dash-sidebar">
+    <div class="dash-logo"><img src="1.jpg" alt="logo" class="brand-logo-img"></div>
+    <nav class="dash-nav">
+      <a href="#" class="dash-link active" onclick="dashTab(event,'dr-home')">🏠 Dashboard</a>
+      <a href="#" class="dash-link" onclick="dashTab(event,'dr-solicitudes')">📋 Solicitudes</a>
+      <a href="#" class="dash-link" onclick="dashTab(event,'dr-ruta')">🗺️ Mi Ruta</a>
+      <a href="#" class="dash-link" onclick="dashTab(event,'dr-historial')">📊 Historial</a>
+      <a href="#" class="dash-link" onclick="dashTab(event,'dr-qr')">🔲 Mi Código QR</a>
+      <a href="#" class="dash-link" onclick="dashTab(event,'dr-perfil')">👤 Mi Perfil</a>
+    </nav>
+    <button class="dash-logout-btn" id="action-logout-trigger3">Cerrar sesión</button>
+  </aside>
+  <main class="dash-main">
+
+    <section id="dr-home" class="dash-tab active">
+      <div class="dash-topbar"><h2>Mi jornada, <span id="dash-reciclador-name"></span> 🚛</h2><span class="dash-date" id="dash-date-r"></span></div>
+      <div class="dash-cards-row">
+        <div class="dash-stat-card dr-card-mes"><div class="dsc-icon">⚖️</div><div><div class="dsc-val">186 kg</div><div class="dsc-lbl">Material este mes</div></div></div>
+        <div class="dash-stat-card dr-card-mes"><div class="dsc-icon">📦</div><div><div class="dsc-val">42</div><div class="dsc-lbl">Recojos este mes</div></div></div>
+        <div class="dash-stat-card dr-card-mes"><div class="dsc-icon">✅</div><div><div class="dsc-val">98%</div><div class="dsc-lbl">Éxito en recojos</div></div></div>
+        <div class="dash-stat-card dr-card-mes"><div class="dsc-icon">⭐</div><div><div class="dsc-val">4.9</div><div class="dsc-lbl">Calificación promedio</div></div></div>
+      </div>
+      <div class="dash-row-2col" style="margin-top:20px;">
+        <div class="dash-panel">
+          <h3>📦 Solicitudes activas</h3>
+          <div class="sol-list">
+            <div class="sol-item sol-item--tight"><div class="sol-ico">🧴</div><div><strong>Jr. Libertad 120</strong><p>Rosa C. • Plástico • 3 kg est.</p><small>🕐 Hoy 3pm–5pm • 420m</small></div><button class="btn-small-green" onclick="showToast('✅ Recojo aceptado. Ciudadano notificado.','success')">Aceptar</button></div>
+            <div class="sol-item sol-item--tight"><div class="sol-ico">📦</div><div><strong>Av. Los Próceres 88</strong><p>Juan A. • Cartón • 5 kg est.</p><small>🕐 Hoy 4pm–6pm • 650m</small></div><button class="btn-small-green" onclick="showToast('✅ Recojo aceptado. Ciudadano notificado.','success')">Aceptar</button></div>
+          </div>
+        </div>
+        <div class="dash-panel">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+            <h3 style="margin-bottom:0;">📈 Meta de hoy</h3>
+            <button class="btn-editar-meta" id="btn-editar-meta" onclick="toggleEditarMeta()">✏️ Editar meta</button>
+          </div>
+          <div id="meta-display">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;">
+              <span class="meta-cifra">18.5 kg <span style="font-size:18px;color:var(--slate-text);font-weight:500;">/ <span id="meta-valor-display">30</span> kg</span></span>
+              <span style="color:var(--accent-green);font-weight:800;font-size:20px;">62%</span>
+            </div>
+            <div style="background:#E2E8F0;height:14px;border-radius:8px;overflow:hidden;">
+              <div style="background:var(--primary-dark);height:100%;width:62%;border-radius:8px;transition:width .6s;"></div>
+            </div>
+          </div>
+          <div id="meta-edit-form" class="hidden" style="margin-bottom:10px;">
+            <label style="font-size:12px;font-weight:700;color:var(--primary-dark);">Nueva meta (kg)</label>
+            <div style="display:flex;gap:8px;margin-top:4px;">
+              <input type="number" id="meta-input" placeholder="Ej. 35" min="1" style="padding:8px;border:1px solid var(--border-split);border-radius:6px;font-size:14px;flex:1;">
+              <button class="btn-small-green" onclick="guardarMeta()">Guardar</button>
+            </div>
+          </div>
+          <div class="impact-row" style="margin-top:16px;">
+            <div class="impact-item dr-impact-hoy"><div class="ii-val">3</div><div class="ii-lbl">Recojos realizados hoy</div></div>
+            <div class="impact-item dr-impact-hoy"><div class="ii-val">2</div><div class="ii-lbl">Pendientes hoy</div></div>
+            <div class="impact-item dr-impact-hoy"><div class="ii-val">🧴</div><div class="ii-lbl">Material más reciclado: Plástico</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="dr-solicitudes" class="dash-tab">
+      <div class="dash-topbar"><h2>📋 Solicitudes disponibles</h2></div>
+      <div class="dash-panel">
+        <div class="sol-list">
+          <div class="sol-item sol-item--tight"><div class="sol-ico">🧴</div><div><strong>Jr. Libertad 120, Surco</strong><p>Rosa C. • Plástico • 3 kg est. • 🕐 Hoy 3pm–5pm</p><small>📍 420m de tu ubicación</small></div><button class="btn-small-green" onclick="showToast('✅ Recojo aceptado','success')">Aceptar</button></div>
+          <div class="sol-item sol-item--tight"><div class="sol-ico">📦</div><div><strong>Av. Los Próceres 88, Surco</strong><p>Juan A. • Cartón • 5 kg est. • 🕐 Hoy 4pm–6pm</p><small>📍 650m de tu ubicación</small></div><button class="btn-small-green" onclick="showToast('✅ Recojo aceptado','success')">Aceptar</button></div>
+          <div class="sol-item sol-item--tight"><div class="sol-ico">📄</div><div><strong>Ca. Los Pinos 55, Miraflores</strong><p>Ana R. • Papel • 2 kg est. • 🕐 Mañana 8am–10am</p><small>📍 1.1km de tu ubicación</small></div><button class="btn-small-green" onclick="showToast('✅ Recojo aceptado','success')">Aceptar</button></div>
+          <div class="sol-item sol-item--tight"><div class="sol-ico">🍶</div><div><strong>Jr. Tacna 210, Lima Centro</strong><p>Pedro V. • Vidrio • 4 kg est. • 🕐 Mañana 10am–12pm</p><small>📍 1.4km de tu ubicación</small></div><button class="btn-small-green" onclick="showToast('✅ Recojo aceptado','success')">Aceptar</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="dr-ruta" class="dash-tab">
+      <div class="dash-topbar"><h2>🗺️ Mi Ruta del Día</h2></div>
+      <div class="dash-row-2col">
+        <div class="dash-panel" style="background:#1A2218;min-height:320px;position:relative;overflow:hidden;">
+          <div style="position:absolute;bottom:16px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);padding:6px 14px;border-radius:20px;font-size:11px;color:var(--brand-light);">Ruta activa — 3 paradas</div>
+          <div style="position:absolute;top:50%;left:45%;font-size:20px;">🚛<br><small style="color:var(--brand-light);font-size:9px;">Tú</small></div>
+          <div style="position:absolute;top:30%;left:65%;font-size:16px;">📍1</div>
+          <div style="position:absolute;top:60%;left:25%;font-size:16px;">📍2</div>
+          <div style="position:absolute;top:20%;left:30%;font-size:16px;">📍3</div>
+        </div>
+        <div class="dash-panel">
+          <h3>Paradas pendientes</h3>
+          <div class="route-steps">
+            <div class="route-step"><div class="step-dot" style="background:#94A3B8;">✓</div><div class="step-info"><h4>Av. Los Próceres 340 — Completada</h4><p>María G. • Plástico • 2 kg</p></div></div>
+            <div class="route-step"><div class="step-dot current">2</div><div class="step-info"><h4>Jr. Libertad 120 — En camino</h4><p>Rosa C. • Papel • 3 kg est. • 420m</p></div></div>
+            <div class="route-step"><div class="step-dot" style="background:#E2E8F0;color:#94A3B8;">3</div><div class="step-info"><h4>Ca. Los Pinos 55 — Pendiente</h4><p>Juan A. • Cartón • 1.5 kg est. • 380m</p></div></div>
+          </div>
+          <button class="btn-iniciar-nav" onclick="showToast('🗺️ Navegando hacia Jr. Libertad 120','info')">Iniciar navegación →</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="dr-historial" class="dash-tab">
+      <div class="dash-topbar"><h2>📊 Historial de recojos</h2></div>
+      <div class="dash-panel">
+        <table class="dash-table">
+          <thead><tr><th>Fecha</th><th>Ciudadano</th><th>Material</th><th>Peso</th><th>Estado</th><th>Calificación</th></tr></thead>
+          <tbody>
+            <tr><td>20/06</td><td>Rosa C.</td><td>Plástico</td><td>3 kg</td><td><span class="badge-status en-proceso">En proceso</span></td><td>—</td></tr>
+            <tr><td>15/06</td><td>Juan A.</td><td>Cartón</td><td>5 kg</td><td><span class="badge-status completado">Completado</span></td><td>⭐⭐⭐⭐⭐</td></tr>
+            <tr><td>10/06</td><td>Ana R.</td><td>Papel</td><td>2 kg</td><td><span class="badge-status completado">Completado</span></td><td>⭐⭐⭐⭐⭐</td></tr>
+            <tr><td>05/06</td><td>Pedro V.</td><td>Vidrio</td><td>4 kg</td><td><span class="badge-status completado">Completado</span></td><td>⭐⭐⭐⭐</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="dr-qr" class="dash-tab">
+      <div class="dash-topbar"><h2>🔲 Mi Código QR de Identificación</h2></div>
+      <div style="display:flex;gap:24px;flex-wrap:wrap;">
+        <div class="dash-panel" style="text-align:center;max-width:320px;">
+          <p style="font-size:13px;color:var(--slate-text);margin-bottom:16px;">Muestra este código a ciudadanos y centros de acopio para verificar tu identidad.</p>
+          <div style="background:#F1F5F9;padding:20px;border-radius:12px;display:inline-block;margin-bottom:14px;"><div id="dr-qr-display"></div></div>
+          <div style="font-size:12px;background:#F8FAFC;padding:8px;border-radius:6px;margin-bottom:14px;">TOKEN: <span id="dr-qr-token">—</span></div>
+          <button class="btn-refresh-qr" onclick="genQRReciclador()">🔄 Regenerar QR</button>
+          <p style="font-size:11px;color:var(--slate-text);margin-top:10px;">✅ Disponible sin conexión (guardado en caché)</p>
+        </div>
+        <div class="dash-panel" style="flex:1;min-width:220px;">
+          <h3>Tu información verificada</h3>
+          <div class="perfil-header" style="margin:14px 0;"><div class="perfil-avatar">🚛</div><div><strong id="dr-qr-name"></strong><br><small style="color:var(--slate-text);">Reciclador Independiente</small><br><span class="recycler-badge" style="margin-top:4px;">✅ Cuenta verificada</span></div></div>
+          <div class="impact-row"><div class="impact-item dr-impact-green"><div class="ii-val">42</div><div class="ii-lbl">Recojos</div></div><div class="impact-item dr-impact-green"><div class="ii-val">⭐ 4.9</div><div class="ii-lbl">Calificación</div></div><div class="impact-item dr-impact-green"><div class="ii-val">Surco</div><div class="ii-lbl">Zona</div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="dr-perfil" class="dash-tab">
+      <div class="dash-topbar"><h2>👤 Mi Perfil</h2></div>
+      <div class="dash-row-2col">
+        <div class="dash-panel">
+          <div class="perfil-header"><div class="perfil-avatar">🚛</div><div><h3 id="dr-perfil-name"></h3><small>Reciclador Independiente • Surco</small></div></div>
+          <div class="form-input-group" style="margin-top:16px;"><label>Nombre completo</label><input type="text" value="Evans Soto"></div>
+          <div class="form-input-group" style="margin-top:10px;"><label>Celular</label><input type="tel" value="987654321"></div>
+          <div class="form-input-group" style="margin-top:10px;"><label>Distrito de cobertura</label><select><option selected>Surco</option><option>Miraflores</option><option>Los Olivos</option><option>La Molina</option></select></div>
+          <div class="form-input-group" style="margin-top:10px;"><label>Asociación</label><input type="text" placeholder="Dejar vacío si es independiente"></div>
+          <button class="btn-submit-auth" style="margin-top:14px;" onclick="showToast('✅ Perfil actualizado','success')">Guardar cambios</button>
+        </div>
+        <div class="dash-panel">
+          <h3>⚙️ Configuración</h3>
+          <div class="config-row"><span>🔔 Alertas de nuevas solicitudes</span><label class="toggle"><input type="checkbox" checked><span class="slider"></span></label></div>
+          <div class="config-row"><span>📍 Alertas de proximidad</span><label class="toggle"><input type="checkbox" checked><span class="slider"></span></label></div>
+          <div class="config-row"><span>💬 Mensajes de ciudadanos</span><label class="toggle"><input type="checkbox" checked><span class="slider"></span></label></div>
+          <h3 style="margin-top:20px;">📊 Estadísticas del mes</h3>
+          <div class="impact-row" style="margin-top:12px;flex-wrap:wrap;">
+            <div class="impact-item dr-impact-green"><div class="ii-val">42</div><div class="ii-lbl">Recojos</div></div>
+            <div class="impact-item dr-impact-green"><div class="ii-val">186 kg</div><div class="ii-lbl">Recolectado</div></div>
+            <div class="impact-item dr-impact-green"><div class="ii-val">⭐ 4.9</div><div class="ii-lbl">Calificación</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+</div>
+
+<!-- DASHBOARD ADMIN -->
+<div id="dash-admin" class="hidden">
+<div class="dash-wrapper">
+  <aside class="dash-sidebar">
+    <div class="dash-logo"><img src="1.jpg" alt="logo" class="brand-logo-img"></div>
+    <nav class="dash-nav">
+      <a href="#" class="dash-link active" onclick="dashTab(event,'da-home')">🏠 Panel Central</a>
+      <a href="#" class="dash-link" onclick="dashTab(event,'da-transacciones')">💰 Transacciones</a>
+      <a href="#" class="dash-link" onclick="dashTab(event,'da-inventario')">📦 Inventario</a>
+      <a href="#" class="dash-link" onclick="dashTab(event,'da-recicladores')">🚛 Recicladores</a>
+      <a href="#" class="dash-link" onclick="dashTab(event,'da-precios')">📈 Precios mercado</a>
+      <a href="#" class="dash-link" onclick="dashTab(event,'da-perfil')">🏢 Perfil del Centro</a>
+    </nav>
+    <button class="dash-logout-btn" id="action-logout-trigger4">Cerrar sesión</button>
+  </aside>
+  <main class="dash-main">
+
+    <section id="da-home" class="dash-tab active">
+      <div class="dash-topbar"><h2>Centro de Acopio — <span id="dash-admin-name"></span> 🏭</h2><span class="dash-date" id="dash-date-a"></span></div>
+      <div class="dash-cards-row">
+        <div class="dash-stat-card green"><div class="dsc-icon">⚖️</div><div><div class="dsc-val">1,240 kg</div><div class="dsc-lbl">Material este mes</div></div></div>
+        <div class="dash-stat-card green"><div class="dsc-icon">💰</div><div><div class="dsc-val">S/. 3,850</div><div class="dsc-lbl">Pagado a recicladores</div></div></div>
+        <div class="dash-stat-card green"><div class="dsc-icon">🚛</div><div><div class="dsc-val">28</div><div class="dsc-lbl">Recicladores atendidos</div></div></div>
+        <div class="dash-stat-card green"><div class="dsc-icon">📊</div><div><div class="dsc-val">S/. 5,200</div><div class="dsc-lbl">Ganancia estimada</div></div></div>
+      </div>
+      <div class="dash-row-2col" style="margin-top:20px;">
+        <div class="dash-panel">
+          <h3>🔔 Recicladores en camino</h3>
+          <div class="sol-list">
+            <div class="sol-item"><div class="sol-ico">🚛</div><div><strong>Evans Soto</strong><p>Plástico + Papel • ~8 kg est.</p><small>🕐 Llega en ~15 min</small></div><span class="badge-status en-proceso">En camino</span></div>
+            <div class="sol-item"><div class="sol-ico">🌿</div><div><strong>Rosa Castillo</strong><p>Cartón • ~12 kg est.</p><small>🕐 Llega en ~30 min</small></div><span class="badge-status en-proceso">En camino</span></div>
+          </div>
+        </div>
+        <div class="dash-panel">
+          <h3>📊 Inventario actual</h3>
+          <div class="inv-row"><span>🧴 Plástico</span><div class="inv-bar"><div style="width:65%;background:#3B82F6;"></div></div><span>320 kg</span></div>
+          <div class="inv-row"><span>📄 Papel</span><div class="inv-bar"><div style="width:40%;background:#10B981;"></div></div><span>195 kg</span></div>
+          <div class="inv-row"><span>📦 Cartón</span><div class="inv-bar"><div style="width:55%;background:#F59E0B;"></div></div><span>270 kg</span></div>
+          <div class="inv-row"><span>🍶 Vidrio</span><div class="inv-bar"><div style="width:20%;background:#8B5CF6;"></div></div><span>98 kg</span></div>
+          <div class="inv-row"><span>🔩 Metal</span><div class="inv-bar"><div style="width:30%;background:#EF4444;"></div></div><span>148 kg</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="da-transacciones" class="dash-tab">
+      <div class="dash-topbar"><h2>💰 Registro de Transacciones</h2></div>
+      <div class="dash-row-2col">
+        <div class="dash-panel" style="max-width:420px;">
+          <h3>Nueva transacción</h3>
+          <div class="form-input-group" style="margin-bottom:10px;"><label>Reciclador</label><select><option>Evans Soto</option><option>Rosa Castillo</option><option>Carlos Mendoza</option></select></div>
+          <div class="form-input-group" style="margin-bottom:10px;"><label>Tipo de material</label><select><option>Plástico</option><option>Papel</option><option>Cartón</option><option>Vidrio</option><option>Metal</option></select></div>
+          <div class="form-double-row">
+            <div class="form-input-group flex-item"><label>Peso (kg)</label><input type="number" placeholder="Ej. 15.5" min="0.1"></div>
+            <div class="form-input-group flex-item"><label>Monto pagado (S/.)</label><input type="number" placeholder="Ej. 46.50" min="0"></div>
+          </div>
+          <div class="form-input-group" style="margin-top:10px;"><label>Calidad del material</label>
+            <div style="display:flex;gap:8px;margin-top:4px;">
+              <button class="chip" onclick="toggleChip(this)">⭐ Baja</button>
+              <button class="chip active" onclick="toggleChip(this)">⭐⭐ Media</button>
+              <button class="chip" onclick="toggleChip(this)">⭐⭐⭐ Alta</button>
+            </div>
+          </div>
+          <button class="btn-submit-auth" style="margin-top:14px;" onclick="showToast('✅ Transacción registrada correctamente','success')">Registrar transacción</button>
+        </div>
+        <div class="dash-panel">
+          <h3>📋 Últimas transacciones</h3>
+          <table class="dash-table">
+            <thead><tr><th>Fecha</th><th>Reciclador</th><th>Material</th><th>Peso</th><th>Monto</th></tr></thead>
+            <tbody>
+              <tr><td>20/06</td><td>Evans S.</td><td>Plástico</td><td>15 kg</td><td>S/. 45</td></tr>
+              <tr><td>19/06</td><td>Rosa C.</td><td>Cartón</td><td>22 kg</td><td>S/. 33</td></tr>
+              <tr><td>18/06</td><td>Carlos M.</td><td>Papel</td><td>18 kg</td><td>S/. 27</td></tr>
+              <tr><td>17/06</td><td>Evans S.</td><td>Metal</td><td>8 kg</td><td>S/. 48</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="da-inventario" class="dash-tab">
+      <div class="dash-topbar"><h2>📦 Inventario del Centro</h2></div>
+      <div class="dash-cards-row" style="margin-bottom:20px;">
+        <div class="dash-stat-card green"><div class="dsc-icon">⚖️</div><div><div class="dsc-val">1,031 kg</div><div class="dsc-lbl">Total disponible</div></div></div>
+        <div class="dash-stat-card white"><div class="dsc-icon">📈</div><div><div class="dsc-val">S/. 5,200</div><div class="dsc-lbl">Valor estimado</div></div></div>
+      </div>
+      <div class="dash-panel">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;"><h3>Detalle por material</h3><button class="btn-small-green" onclick="showToast('📄 Reporte generado y listo para descargar','success')">📄 Exportar reporte</button></div>
+        <table class="dash-table">
+          <thead><tr><th>Material</th><th>Stock (kg)</th><th>Precio ref. (S/./kg)</th><th>Valor estimado</th><th>Estado</th></tr></thead>
+          <tbody>
+            <tr><td>🧴 Plástico</td><td>320 kg</td><td>S/. 1.50</td><td>S/. 480</td><td><span class="badge-status completado">Disponible</span></td></tr>
+            <tr><td>📄 Papel</td><td>195 kg</td><td>S/. 0.80</td><td>S/. 156</td><td><span class="badge-status completado">Disponible</span></td></tr>
+            <tr><td>📦 Cartón</td><td>270 kg</td><td>S/. 0.60</td><td>S/. 162</td><td><span class="badge-status completado">Disponible</span></td></tr>
+            <tr><td>🍶 Vidrio</td><td>98 kg</td><td>S/. 0.30</td><td>S/. 29.4</td><td><span class="badge-status completado">Disponible</span></td></tr>
+            <tr><td>🔩 Metal</td><td>148 kg</td><td>S/. 3.20</td><td>S/. 473.6</td><td><span class="badge-status completado">Disponible</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="da-recicladores" class="dash-tab">
+      <div class="dash-topbar"><h2>🚛 Recicladores Proveedores</h2></div>
+      <div class="dash-panel">
+        <div class="recycler-list">
+          <div class="recycler-item"><div class="recycler-avatar">🚛</div><div class="recycler-info"><h4>Evans Soto</h4><p>Independiente • Surco • 42 entregas</p><span class="recycler-badge">⭐ 4.9 Calidad • ✅ Verificado</span></div><button class="btn-contact-recycler" onclick="showToast('📋 Perfil de Evans Soto cargado','info')">Ver perfil</button></div>
+          <div class="recycler-item"><div class="recycler-avatar">🌿</div><div class="recycler-info"><h4>Rosa Castillo</h4><p>Asociación Verde Lima • Miraflores • 38 entregas</p><span class="recycler-badge">⭐ 4.7 Calidad • ✅ Verificada</span></div><button class="btn-contact-recycler" onclick="showToast('📋 Perfil de Rosa Castillo cargado','info')">Ver perfil</button></div>
+          <div class="recycler-item"><div class="recycler-avatar">♻️</div><div class="recycler-info"><h4>Carlos Mendoza</h4><p>Independiente • Los Olivos • 29 entregas</p><span class="recycler-badge">⭐ 4.8 Calidad • ✅ Verificado</span></div><button class="btn-contact-recycler" onclick="showToast('📋 Perfil de Carlos Mendoza cargado','info')">Ver perfil</button></div>
+          <div class="recycler-item"><div class="recycler-avatar">🔩</div><div class="recycler-info"><h4>Pedro Vargas</h4><p>Reciclador Nuevo • Surco • 3 entregas</p><span class="recycler-badge">⭐ Sin calificación aún</span></div><button class="btn-contact-recycler" onclick="showToast('📋 Perfil de Pedro Vargas cargado','info')">Ver perfil</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="da-precios" class="dash-tab">
+      <div class="dash-topbar"><h2>📈 Precios de Mercado</h2><small style="color:var(--slate-text);font-size:12px;">Actualizado: Hoy 8:00am</small></div>
+      <div class="dash-panel">
+        <table class="dash-table">
+          <thead><tr><th>Material</th><th>Precio compra (S/./kg)</th><th>Precio venta (S/./kg)</th><th>Variación</th><th>Tendencia</th></tr></thead>
+          <tbody>
+            <tr><td>🧴 Plástico PET</td><td>S/. 1.50</td><td>S/. 2.20</td><td class="pts-pos">+0.10</td><td>📈</td></tr>
+            <tr><td>📄 Papel blanco</td><td>S/. 0.80</td><td>S/. 1.30</td><td class="pts-neg">-0.05</td><td>📉</td></tr>
+            <tr><td>📦 Cartón</td><td>S/. 0.60</td><td>S/. 1.00</td><td class="pts-pos">+0.02</td><td>📈</td></tr>
+            <tr><td>🍶 Vidrio</td><td>S/. 0.30</td><td>S/. 0.55</td><td>0.00</td><td>➡️</td></tr>
+            <tr><td>🔩 Cobre</td><td>S/. 3.20</td><td>S/. 4.80</td><td class="pts-pos">+0.20</td><td>📈</td></tr>
+            <tr><td>🔩 Aluminio</td><td>S/. 2.10</td><td>S/. 3.40</td><td class="pts-neg">-0.10</td><td>📉</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:11px;color:#94A3B8;margin-top:12px;font-style:italic;">Precios referenciales del mercado de Lima Metropolitana. Fuente: Bolsa de residuos MINAM.</p>
+      </div>
+    </section>
+
+    <section id="da-perfil" class="dash-tab">
+      <div class="dash-topbar"><h2>🏢 Perfil del Centro</h2></div>
+      <div class="dash-row-2col">
+        <div class="dash-panel">
+          <div class="perfil-header"><div class="perfil-avatar">🏭</div><div><h3>Centro Verde Lima</h3><small>RUC: 20512345678</small><br><span class="recycler-badge" style="margin-top:4px;">✅ Activo y verificado</span></div></div>
+          <div class="form-input-group" style="margin-top:16px;"><label>Nombre del centro</label><input type="text" value="Centro Verde Lima"></div>
+          <div class="form-input-group" style="margin-top:10px;"><label>Dirección</label><input type="text" value="Av. Separadora Industrial 140, Ate"></div>
+          <div class="form-input-group" style="margin-top:10px;"><label>Teléfono del centro</label><input type="tel" value="01-456-7890"></div>
+          <div class="form-input-group" style="margin-top:10px;"><label>RUC</label><input type="text" value="20512345678" disabled style="background:#f1f5f9;"></div>
+          <button class="btn-submit-auth" style="margin-top:14px;" onclick="showToast('✅ Perfil del centro actualizado','success')">Guardar cambios</button>
+        </div>
+        <div class="dash-panel">
+          <h3>⚙️ Configuración</h3>
+          <div class="config-row"><span>🔔 Alertas de recicladores en camino</span><label class="toggle"><input type="checkbox" checked><span class="slider"></span></label></div>
+          <div class="config-row"><span>📊 Reporte semanal automático</span><label class="toggle"><input type="checkbox" checked><span class="slider"></span></label></div>
+          <div class="config-row"><span>📈 Alertas de cambio de precio</span><label class="toggle"><input type="checkbox"><span class="slider"></span></label></div>
+          <h3 style="margin-top:20px;">📊 Resumen del mes</h3>
+          <div class="impact-row" style="margin-top:12px;flex-wrap:wrap;">
+            <div class="impact-item"><div class="ii-val">1,240 kg</div><div class="ii-lbl">Recibido</div></div>
+            <div class="impact-item"><div class="ii-val">28</div><div class="ii-lbl">Recicladores</div></div>
+            <div class="impact-item"><div class="ii-val">S/. 5,200</div><div class="ii-lbl">Ganancia</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+</div>
+
+<!-- VENTANA EMERGENTE DE REGISTRO/INICIO DE SESION -->
+<div id="auth-system-overlay" class="modal-shadow-overlay hidden">
+    <div class="figma-auth-container">
+        <button class="close-modal-btn" id="close-auth-modal">&times;</button>
+        <div class="auth-brand-sidebar">
+            <img src="1.jpg" alt="Logo RecirculaLima" class="sidebar-logo">
+            <p class="sidebar-pre">SISTEMA INTEGRAL</p>
+            <h2 class="sidebar-heading">RecirculaLima</h2>
+            <p class="sidebar-paragraph">Accede a tu cuenta institucional o ciudadana para reportar métricas de valorización o registrar transferencias de material.</p>
+        </div>
+        <div class="auth-form-workspace">
+            <div class="auth-mode-tabs">
+                <button class="auth-mode-tab active" id="tab-login">Iniciar Sesión</button>
+                <button class="auth-mode-tab" id="tab-register">Registrar Cuenta</button>
+            </div>
+            <div class="role-tabs-selector">
+                <button class="tab-selector-item active" data-role="ciudadano">Ciudadano</button>
+                <button class="tab-selector-item" data-role="reciclador">Reciclador</button>
+                <button class="tab-selector-item" data-role="administrador">Admin. Acopio</button>
+            </div>
+            <div class="context-info-banner">
+                <h4 id="ctx-title">Acceso Ciudadano</h4>
+                <p id="ctx-desc">Ingresa tus credenciales para ver tus ReciPuntos.</p>
+            </div>
+            <form id="form-login" class="auth-core-form">
+                <div class="form-input-group">
+                    <label for="login-email">Correo electrónico</label>
+                    <input type="email" id="login-email" placeholder="nombre@correo.com">
+                    <span class="field-error-msg" id="err-le">Ingresa un correo válido.</span>
+                </div>
+                <div class="form-input-group">
+                    <label for="login-pass">Contraseña</label>
+                    <input type="password" id="login-pass" placeholder="••••••••">
+                    <span class="field-error-msg" id="err-lp">La contraseña no puede estar vacía.</span>
+                </div>
+                <div class="remember-row">
+                    <input type="checkbox" id="chk-remember">
+                    <label for="chk-remember">Recordarme en este dispositivo</label>
+                </div>
+                <button type="submit" class="btn-submit-auth" id="btn-login-txt">Iniciar Sesión</button>
+                <button type="button" class="forgot-link" id="btn-forgot">¿Olvidaste tu contraseña?</button>
+                <p class="auth-switch-text">¿Eres nuevo? <button type="button" id="sw-to-reg">Crea tu cuenta aquí</button></p>
+            </form>
+            <form id="form-register" class="auth-core-form hidden">
+                <div class="form-input-group">
+                    <label for="reg-name">Nombres Completos</label>
+                    <input type="text" id="reg-name" placeholder="Ej. Carlos Mendoza">
+                    <span class="field-error-msg" id="err-rn">Este campo es obligatorio.</span>
+                </div>
+                <div class="form-double-row">
+                    <div class="form-input-group flex-item" id="dni-wrap">
+                        <label for="reg-dni">DNI (8 dígitos)</label>
+                        <input type="text" id="reg-dni" placeholder="12345678" maxlength="8" inputmode="numeric">
+                        <span class="field-error-msg" id="err-rd">El DNI debe contener exactamente 8 números.</span>
+                    </div>
+                    <div class="form-input-group flex-item">
+                        <label for="reg-email">Correo electrónico</label>
+                        <input type="email" id="reg-email" placeholder="nombre@correo.com">
+                        <span class="field-error-msg" id="err-re">Correo inválido.</span>
+                    </div>
+                </div>
+                <div class="form-double-row">
+                    <div class="form-input-group flex-item">
+                        <label for="reg-pass">Contraseña</label>
+                        <input type="password" id="reg-pass" placeholder="Mínimo 8 caracteres">
+                        <span class="field-error-msg" id="err-rp">Mínimo 8 caracteres.</span>
+                    </div>
+                    <div class="form-input-group flex-item">
+                        <label for="reg-pass2">Confirmar contraseña</label>
+                        <input type="password" id="reg-pass2" placeholder="Repite tu contraseña">
+                        <span class="field-error-msg" id="err-rp2">Las contraseñas no coinciden.</span>
+                    </div>
+                </div>
+                <div id="extra-reciclador" class="extra-fields-section hidden">
+                    <div class="form-input-group">
+                        <label for="reg-rec-code">Código de Reciclador</label>
+                        <input type="text" id="reg-rec-code" placeholder="Ej. REC-2026-X">
+                    </div>
+                    <div class="form-double-row">
+                        <div class="form-input-group flex-item">
+                            <label for="reg-district">Distrito de Cobertura</label>
+                            <select id="reg-district">
+                                <option value="">Selecciona...</option>
+                                <option>Lima Centro</option><option>Miraflores</option>
+                                <option>Los Olivos</option><option>La Molina</option>
+                                <option>San Borja</option><option>Surco</option>
+                            </select>
+                        </div>
+                        <div class="form-input-group flex-item">
+                            <label for="reg-phone">Celular</label>
+                            <input type="tel" id="reg-phone" placeholder="999888777">
+                        </div>
+                    </div>
+                </div>
+                <div id="extra-admin" class="extra-fields-section hidden">
+                    <div class="form-input-group">
+                        <label for="reg-license">Número de Licencia de Acopio</label>
+                        <input type="text" id="reg-license" placeholder="Ej. LIC-2026-LIMA">
+                    </div>
+                </div>
+                <button type="submit" class="btn-submit-auth" id="btn-reg-txt">Crear Cuenta</button>
+                <p class="auth-switch-text">¿Ya tienes cuenta? <button type="button" id="sw-to-login">Inicia sesión aquí</button></p>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- VENTANA EMERGENTE QR -->
+<div id="qr-modal-overlay" class="modal-shadow-overlay hidden">
+    <div class="qr-interactive-card">
+        <button class="close-modal-btn" id="close-qr-modal">&times;</button>
+        <h3>Código QR de Validación</h3>
+        <div class="qr-explanation-note">
+            <strong>ℹ️ ¿Para qué sirve este código?</strong>
+            El reciclador te mostrará un código QR, al recoger tu material, que deberás escanear mediante un dispositivo con cámara. Esto registra automáticamente el peso y tipo de residuo, y transfiere tus ReciPuntos a tu billetera digital al instante, sin papeles ni espera. A continuación, un ejemplo de QR
+        </div>
+        <div class="qr-render-zone"><div id="qr-code-display"></div></div>
+        <div class="qr-metadata">TOKEN ID: <span id="qr-random-token">---</span></div>
+        <button class="btn-refresh-qr" id="btn-regenerate-qr">Generar Nuevo QR</button>
+    </div>
+</div>
+
+<!-- VENTANA EMERGENTE RECUPERAR CONTRASEÑA -->
+<div id="recovery-modal" class="modal-shadow-overlay hidden">
+    <div class="recovery-card">
+        <button class="close-modal-btn" onclick="closeModal('recovery-modal')">&times;</button>
+        <h3>Recuperar tu cuenta</h3>
+        <p>Ingresa tu correo y te enviaremos un enlace para restablecer tu contraseña.</p>
+        <div class="form-input-group">
+            <label for="recovery-email">Correo electrónico</label>
+            <input type="email" id="recovery-email" placeholder="nombre@correo.com">
+        </div>
+        <button class="btn-recovery-send" id="btn-send-recovery">Enviar enlace de recuperación</button>
+        <div class="success-msg" id="recovery-success">✅ Enlace enviado. Revisa tu bandeja (y la carpeta de spam).</div>
+    </div>
+</div>
+
+<!-- VENTAN EMERGENTE CONTACTO -->
+<div id="modal-contacto" class="modal-shadow-overlay hidden">
+    <div class="page-modal-container">
+        <button class="close-modal-btn" onclick="closeModal('modal-contacto')">&times;</button>
+        <h2>📬 Contáctanos</h2>
+        <p>¿Tienes dudas, sugerencias o quieres unirte a la red? Te respondemos en menos de 48 horas hábiles.</p>
+        <div class="contact-form-inner" id="contact-form-fields">
+            <input type="text" id="c-name" placeholder="Tu nombre completo">
+            <input type="email" id="c-email" placeholder="Tu correo electrónico">
+            <input type="text" id="c-subject" placeholder="Asunto">
+            <textarea id="c-msg" placeholder="Cuéntanos en qué podemos ayudarte..."></textarea>
+            <button class="btn-contact-send" id="btn-send-contact">Enviar mensaje</button>
+        </div>
+        <div class="contact-success-box" id="contact-success">✅ ¡Mensaje enviado con éxito! Te contactaremos pronto.</div>
+        <h4>También puedes escribirnos a:</h4>
+        <p>📧 contacto@recirculalima.pe</p>
+        <p>📍 Lima, Perú — Atención lunes a viernes, 9am–6pm</p>
+    </div>
+</div>
+
+<!-- VENTANA DE PRIVACIDAD -->
+<div id="modal-privacidad" class="modal-shadow-overlay hidden">
+    <div class="page-modal-container">
+        <button class="close-modal-btn" onclick="closeModal('modal-privacidad')">&times;</button>
+        <h2>🔒 Política de Privacidad</h2>
+        <p><em>Última actualización: junio 2026</em></p>
+        <h4>1. Datos que recopilamos</h4>
+        <p>Recopilamos nombre, DNI, correo electrónico, ubicación aproximada y datos de actividad de reciclaje para proveer el servicio y acreditar los puntos obtenidos.</p>
+        <h4>2. Uso de la información</h4>
+        <p>Usamos tus datos exclusivamente para operar la plataforma, calcular tus ReciPuntos y conectarte con recicladores verificados. No vendemos ni compartimos tus datos con terceros con fines comerciales.</p>
+        <h4>3. Seguridad</h4>
+        <p>Toda la información se almacena con cifrado y cumple la Ley Peruana de Protección de Datos Personales (Ley 29733).</p>
+        <h4>4. Tus derechos</h4>
+        <p>Puedes solicitar la eliminación de tu cuenta y datos escribiendo a <strong>privacidad@recirculalima.pe</strong>.</p>
+    </div>
+</div>
+
+<!-- VENTANA TÉRMINOS -->
+<div id="modal-terminos" class="modal-shadow-overlay hidden">
+    <div class="page-modal-container">
+        <button class="close-modal-btn" onclick="closeModal('modal-terminos')">&times;</button>
+        <h2>📄 Términos de Uso</h2>
+        <h4>1. Uso del servicio</h4>
+        <p>RecirculaLima es una plataforma gratuita para ciudadanos que deseen segregar sus residuos y conectarse con recicladores formalizados. Queda prohibido el uso para fines fraudulentos.</p>
+        <h4>2. ReciPuntos</h4>
+        <p>Los ReciPuntos no tienen valor monetario directo. Son un beneficio de RecirculaLima para incentivar el reciclaje y pueden ser modificados según la política del programa.</p>
+        <h4>3. Responsabilidades</h4>
+        <p>RecirculaLima facilita la conexión entre ciudadanos y recicladores pero no se hace responsable por el comportamiento de terceros.</p>
+        <h4>4. Modificaciones</h4>
+        <p>Nos reservamos el derecho de actualizar estos términos notificando los cambios por correo electrónico registrado.</p>
+    </div>
+</div>
+
+<!-- VENTANA RECICLADORES CERCANOS -->
+<div id="modal-recicladores" class="modal-shadow-overlay hidden">
+    <div class="map-modal-card">
+        <button class="close-modal-btn" onclick="closeModal('modal-recicladores')">&times;</button>
+        <h3>📍 Recicladores cercanos a ti</h3>
+        <p>Operadores verificados a menos de 500m de tu ubicación con horarios confirmados.</p>
+        <div class="recycler-list">
+            <div class="recycler-item" onclick="showToast('✅ Solicitud enviada a Carlos M. Te confirmará en breve.','success')">
+                <div class="recycler-avatar">♻️</div>
+                <div class="recycler-info"><h4>Carlos Mendoza</h4><p>🗓️ Hoy 2pm–5pm &nbsp;•&nbsp; 320m de distancia</p><span class="recycler-badge">✅ Verificado</span></div>
+                <button class="btn-contact-recycler">Contactar</button>
+            </div>
+            <div class="recycler-item" onclick="showToast('✅ Solicitud enviada a Rosa C. Te confirmará en breve.','success')">
+                <div class="recycler-avatar">🌿</div>
+                <div class="recycler-info"><h4>Rosa Castillo</h4><p>🗓️ Hoy 3pm–6pm &nbsp;•&nbsp; 480m de distancia</p><span class="recycler-badge">✅ Verificada</span></div>
+                <button class="btn-contact-recycler">Contactar</button>
+            </div>
+            <div class="recycler-item" onclick="showToast('✅ Solicitud enviada a Evans S. Te confirmará en breve.','success')">
+                <div class="recycler-avatar">🚛</div>
+                <div class="recycler-info"><h4>Evans Soto</h4><p>🗓️ Mañana 8am–11am &nbsp;•&nbsp; 490m de distancia</p><span class="recycler-badge">✅ Verificado</span></div>
+                <button class="btn-contact-recycler">Contactar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DESCUENTOS -->
+<div id="modal-descuentos" class="modal-shadow-overlay hidden">
+    <div class="discount-modal-card">
+        <button class="close-modal-btn" onclick="closeModal('modal-descuentos')">&times;</button>
+        <h3>🏪 Red Local de Descuentos</h3>
+        <p>Canjea tus ReciPuntos en estos establecimientos socios cerca de tu barrio.</p>
+        <div class="discount-list">
+            <div class="discount-item">
+                <div class="discount-icon">🍞</div>
+                <div class="discount-info"><h4>Bodega "La Esquina" — Surco</h4><p>10% descuento en compras mayores a S/. 20</p></div>
+                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+                    <span class="discount-pts">150 pts</span>
+                </div>
+            </div>
+            <div class="discount-item">
+                <div class="discount-icon">💊</div>
+                <div class="discount-info"><h4>Farmacia BienSalud — Miraflores</h4><p>S/. 5 de descuento en cualquier compra</p></div>
+                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+                    <span class="discount-pts">200 pts</span>
+                </div>
+            </div>
+            <div class="discount-item">
+                <div class="discount-icon">🍽️</div>
+                <div class="discount-info"><h4>Restaurante "El Verde" — Los Olivos</h4><p>Menú gratis en tu próxima visita</p></div>
+                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+                    <span class="discount-pts">300 pts</span>
+                </div>
+            </div>
+            <div class="discount-item">
+                <div class="discount-icon">☕</div>
+                <div class="discount-info"><h4>Café "Recicla & Toma" — San Borja</h4><p>Café gratis por cada 2 kg reciclados</p></div>
+                <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+                    <span class="discount-pts">80 pts</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- VENTANA DE HORARIOS -->
+<div id="modal-horarios" class="modal-shadow-overlay hidden">
+    <div class="horario-modal-card">
+        <button class="close-modal-btn" onclick="closeModal('modal-horarios')">&times;</button>
+        <h3>🗓️ Horarios de recicladores verificados</h3>
+        <p>Horarios confirmados en tu zona (Surco – Lima Centro).</p>
+        <div class="horario-list">
+            <div class="horario-item"><div><div class="dia">Hoy — Lunes 20</div><div class="hora">Carlos M. &nbsp;•&nbsp; 2:00pm – 5:00pm</div></div><span class="estado disponible">Disponible</span></div>
+            <div class="horario-item"><div><div class="dia">Hoy — Lunes 20</div><div class="hora">Rosa C. &nbsp;•&nbsp; 3:00pm – 6:00pm</div></div><span class="estado disponible">Disponible</span></div>
+            <div class="horario-item"><div><div class="dia">Martes 21</div><div class="hora">Evans S. &nbsp;•&nbsp; 8:00am – 11:00am</div></div><span class="estado disponible">Disponible</span></div>
+            <div class="horario-item"><div><div class="dia">Martes 21</div><div class="hora">Carlos M. &nbsp;•&nbsp; 1:00pm – 4:00pm</div></div><span class="estado lleno">Lleno</span></div>
+            <div class="horario-item"><div><div class="dia">Miércoles 22</div><div class="hora">Rosa C. &nbsp;•&nbsp; 9:00am – 12:00pm</div></div><span class="estado disponible">Disponible</span></div>
+        </div>
+    </div>
+</div>
+
+<!-- VENTAN DE RUTAS -->
+<div id="modal-navegar" class="modal-shadow-overlay hidden">
+    <div class="nav-modal-card">
+        <button class="close-modal-btn" onclick="closeModal('modal-navegar')">&times;</button>
+        <h3>🗺️ Ruta activa — Evans S.</h3>
+        <p>Parada 2 de 3 en progreso. Distancia total estimada: 1.2 km.</p>
+        <div class="route-steps">
+            <div class="route-step"><div class="step-dot" style="background:#94A3B8;">✓</div><div class="step-info"><h4>Av. Los Próceres 340 — Completada</h4><p>María G. • Plástico • 2 kg recolectados</p></div></div>
+            <div class="route-step"><div class="step-dot current">2</div><div class="step-info"><h4>Jr. Libertad 120 — En camino</h4><p>Rosa C. • Papel • 3 kg est. • 420m</p></div></div>
+            <div class="route-step"><div class="step-dot" style="background:#E2E8F0;color:#94A3B8;">3</div><div class="step-info"><h4>Ca. Los Pinos 55 — Pendiente</h4><p>Juan A. • Cartón • 1.5 kg est. • 380m</p></div></div>
+        </div>
+        <button class="btn-iniciar-nav" onclick="showToast('🗺️ Navegación iniciada hacia Jr. Libertad 120','info');closeModal('modal-navegar')">Iniciar navegación →</button>
+    </div>
+</div>
+
+<!-- MODAL TIENDA -->
+<div id="modal-store" class="modal-shadow-overlay hidden">
+    <div class="store-modal-card">
+        <button class="close-modal-btn" onclick="closeModal('modal-store')">&times;</button>
+        <h3 id="store-title">Descargar RecirculaLima</h3>
+        <p id="store-desc">Elige cómo continuar con la descarga de la app.</p>
+        <div class="store-options">
+            <button class="store-btn-opt" id="store-primary-btn">📲 Ir a la tienda oficial</button>
+            <button class="store-btn-opt secondary" onclick="showToast('📧 Te enviaremos el enlace por correo.','info');closeModal('modal-store')">📧 Enviarme el enlace por correo</button>
+            <button class="store-btn-opt secondary" onclick="showToast('📋 Enlace copiado al portapapeles.','success');closeModal('modal-store')">🔗 Copiar enlace de descarga</button>
+        </div>
+    </div>
+</div>
+
+<!-- VENTANA PERFIL RECICLADOR -->
+<div id="modal-perfil-reciclador" class="modal-shadow-overlay hidden">
+  <div class="perfil-rec-modal">
+    <button class="close-modal-btn" onclick="closeModal('modal-perfil-reciclador')">&times;</button>
+    <div class="prm-foto-wrap">
+      <img id="prm-foto" src="" alt="Foto del reciclador" class="prm-foto">
+    </div>
+    <div class="prm-body">
+      <span class="recycler-badge" style="margin-bottom:8px;display:inline-block;">✅ Verificado</span>
+      <h2 id="prm-nombre" class="prm-nombre"></h2>
+      <div class="prm-stats">
+        <div class="prm-stat"><div class="prm-stat-val" id="prm-calificacion"></div><div class="prm-stat-lbl">Calificación</div></div>
+        <div class="prm-stat"><div class="prm-stat-val" id="prm-recojos"></div><div class="prm-stat-lbl">Recojos realizados</div></div>
+        <div class="prm-stat"><div class="prm-stat-val" id="prm-distancia"></div><div class="prm-stat-lbl">Distancia</div></div>
+      </div>
+      <div class="prm-info-row"><span class="prm-label">🕐 Disponibilidad</span><span id="prm-horario" class="prm-value"></span></div>
+      <div class="prm-info-row"><span class="prm-label">♻️ Materiales</span><span id="prm-materiales" class="prm-value"></span></div>
+      <div class="prm-info-row"><span class="prm-label">📍 Zona</span><span class="prm-value">Surco · Lima</span></div>
+      <button class="btn-submit-auth" style="width:100%;margin-top:20px;" onclick="irASolicitarRecojo()">📦 Solicitar Recojo con este reciclador</button>
+    </div>
+  </div>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
