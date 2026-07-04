@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+<link rel="stylesheet" href="assets/styles/styles.css">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;800&family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/styles/styles.css">
 </head>
 <body>
 
@@ -17,7 +18,7 @@
 <header class="navbar">
     <div class="navbar-container">
         <div class="logo-area" onclick="scrollToTop()">
-            <img src="RecirculaLima.png" alt="Logo-RecirculaLima" class="brand-logo-img">
+            <img src="assets/images/RecirculaLima.png" alt="Logo-RecirculaLima" class="brand-logo-img">
             <span class="brand-name">RecirculaLima</span>
         </div>
         <button class="hamburger-btn" id="hamburger-btn" aria-label="Abrir menú">
@@ -63,8 +64,8 @@
     <div class="hero-container">
         <div class="hero-left-visual">
             <div class="hero-mockups-wrap">
-                <img src="Mockup_reciclador.png" alt="App RecirculaLima - Vista reciclador" class="hero-mockup hero-mockup--back">
-                <img src="Mockup_Ciudadano.png" alt="App RecirculaLima - Vista ciudadano" class="hero-mockup hero-mockup--front">
+                <img src="assets/images/Mockup_reciclador.png" alt="App RecirculaLima - Vista reciclador" class="hero-mockup hero-mockup--back">
+                <img src="assets/images/Mockup_Ciudadano.png" alt="App RecirculaLima - Vista ciudadano" class="hero-mockup hero-mockup--front">
             </div>
         </div>
         <div class="hero-right-content">
@@ -246,7 +247,7 @@
             </button>
         </div>
         <div style="display:flex;justify-content:center;align-items:center;">
-            <img src="Mockup_reciclador.png" alt="App RecirculaLima - Reciclador" class="section-mockup-img">
+            <img src="assets/images/Mockup_reciclador.png" alt="App RecirculaLima - Reciclador" class="section-mockup-img">
         </div>
     </div>
 </section>
@@ -255,7 +256,7 @@
 <section id="acopio" class="acopio-segment-section">
     <div class="recycler-container">
         <div style="display:flex;justify-content:center;align-items:center;">
-            <img src="Mockup_centro.png" alt="App RecirculaLima - Centro de Acopio" class="section-mockup-img">
+            <img src="assets/images/Mockup_centro.png" alt="App RecirculaLima - Centro de Acopio" class="section-mockup-img">
         </div>
         <div>
             <span class="section-mini-tag">PARA CENTROS DE ACOPIO</span>
@@ -330,7 +331,7 @@
 <div id="dash-ciudadano" class="hidden">
 <div class="dash-wrapper">
   <aside class="dash-sidebar">
-    <div class="dash-logo"><img src="1.jpg" alt="logo" class="brand-logo-img"></div>
+    <div class="dash-logo"><img src="assets/images/1.jpg" alt="logo" class="brand-logo-img"></div>
     <nav class="dash-nav">
       <a href="#" class="dash-link active" onclick="dashTab(event,'dc-home')">🏠 Inicio</a>
       <a href="#" class="dash-link" onclick="dashTab(event,'dc-solicitar')">📦 Solicitar Recojo</a>
@@ -628,7 +629,7 @@
 <div id="dash-reciclador" class="hidden">
 <div class="dash-wrapper">
   <aside class="dash-sidebar">
-    <div class="dash-logo"><img src="1.jpg" alt="logo" class="brand-logo-img"></div>
+    <div class="dash-logo"><img src="assets/images/1.jpg" alt="logo" class="brand-logo-img"></div>
     <nav class="dash-nav">
       <a href="#" class="dash-link active" onclick="dashTab(event,'dr-home')">🏠 Dashboard</a>
       <a href="#" class="dash-link" onclick="dashTab(event,'dr-solicitudes')">📋 Solicitudes</a>
@@ -787,7 +788,7 @@
 <div id="dash-admin" class="hidden">
 <div class="dash-wrapper">
   <aside class="dash-sidebar">
-    <div class="dash-logo"><img src="1.jpg" alt="logo" class="brand-logo-img"></div>
+    <div class="dash-logo"><img src="assets/images/1.jpg" alt="logo" class="brand-logo-img"></div>
     <nav class="dash-nav">
       <a href="#" class="dash-link active" onclick="dashTab(event,'da-home')">🏠 Panel Central</a>
       <a href="#" class="dash-link" onclick="dashTab(event,'da-transacciones')">💰 Transacciones</a>
@@ -947,7 +948,7 @@
     <div class="figma-auth-container">
         <button class="close-modal-btn" id="close-auth-modal">&times;</button>
         <div class="auth-brand-sidebar">
-            <img src="1.jpg" alt="Logo RecirculaLima" class="sidebar-logo">
+            <img src="assets/images/1.jpg" alt="Logo RecirculaLima" class="sidebar-logo">
             <p class="sidebar-pre">SISTEMA INTEGRAL</p>
             <h2 class="sidebar-heading">RecirculaLima</h2>
             <p class="sidebar-paragraph">Accede a tu cuenta institucional o ciudadana para reportar métricas de valorización o registrar transferencias de material.</p>
@@ -1265,6 +1266,6 @@
   </div>
 </div>
 
-<script src="main.js"></script>
+<script src="assets/scripts/main.js"></script>
 </body>
 </html>
