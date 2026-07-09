@@ -87,6 +87,11 @@ function openRecyclerReg(){
     roleTabs.forEach(t=>t.classList.toggle('active',t.getAttribute('data-role')==='reciclador'));
     currentRole='reciclador'; updateCtx();
 }
+function toggleAsociacion(checkbox){
+    const campo = document.getElementById('campo-asociacion');
+    if(campo) campo.style.display = checkbox.checked ? 'none' : 'flex';
+}
+
 document.getElementById('footer-recicladores-link').addEventListener('click',e=>{ e.preventDefault(); openRecyclerReg(); });
 
 const dniInput=document.getElementById('reg-dni');
@@ -135,15 +140,40 @@ document.getElementById('form-register').addEventListener('submit',e=>{
     showToast(`✅ ¡Bienvenido/a, ${name.split(' ')[0]}! Tu cuenta ha sido creada.`,'success');
 });
 
+function doLogout(){
+    document.getElementById('session-active-area').classList.add('hidden');
+    document.getElementById('auth-btn-group').classList.remove('hidden');
+    document.getElementById('desktop-nav').classList.remove('hidden');
+    document.getElementById('hamburger-btn').classList.remove('hidden');
+    ['dash-ciudadano','dash-reciclador','dash-admin'].forEach(d=>document.getElementById(d).classList.add('hidden'));
+    document.getElementById('landing-page').classList.remove('hidden');
+    showToast('👋 Sesión cerrada correctamente.','info');
+    window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleSidebar(prefix){
+    const nav=document.getElementById('nav-'+prefix);
+    const toggle=document.getElementById('toggle-'+prefix);
+    const logoutMap={'dc':'action-logout-trigger2','dr':'action-logout-trigger3','da':'action-logout-trigger4'};
+    const logout=document.getElementById(logoutMap[prefix]);
+    if(!nav) return;
+    const isOpen=nav.classList.contains('open');
+    nav.classList.toggle('open',!isOpen);
+    if(logout) logout.classList.toggle('open',!isOpen);
+    if(toggle) toggle.classList.toggle('open',!isOpen);
+}
+
 function showSession(name, role){
     document.getElementById('auth-btn-group').classList.add('hidden');
     document.getElementById('session-active-area').classList.remove('hidden');
     document.getElementById('session-user-info').textContent=`🟢 ${name}`;
     document.getElementById('landing-page').classList.add('hidden');
     document.getElementById('desktop-nav').classList.add('hidden');
+    document.getElementById('hamburger-btn').classList.add('hidden');
+    document.getElementById('mobile-nav-drawer').classList.remove('open');
+    hamburgerBtn.classList.remove('open');
     ['dash-ciudadano','dash-reciclador','dash-admin'].forEach(d=>{
-        const el=document.getElementById(d);
-        el.classList.add('hidden');
+        document.getElementById(d).classList.add('hidden');
     });
     document.querySelectorAll('.dash-tab').forEach(t=>{ t.style.display='none'; t.classList.remove('active'); });
     ['dc-home','dr-home','da-home'].forEach(id=>{ const t=document.getElementById(id); if(t){ t.style.display='block'; t.classList.add('active'); } });
@@ -161,17 +191,8 @@ function showSession(name, role){
     window.scrollTo({top:0,behavior:'smooth'});
 }
 
-document.getElementById('action-logout-trigger').addEventListener('click',()=>{
-    document.getElementById('desktop-nav').classList.remove('hidden');
-    document.getElementById('session-active-area').classList.add('hidden');
-    document.getElementById('auth-btn-group').classList.remove('hidden');
-    document.getElementById('dash-ciudadano').classList.add('hidden');
-    document.getElementById('dash-reciclador').classList.add('hidden');
-    document.getElementById('dash-admin').classList.add('hidden');
-    document.getElementById('landing-page').classList.remove('hidden');
-    showToast('Sesión cerrada correctamente.','info');
-    window.scrollTo({top:0,behavior:'smooth'});
-});
+const logoutNavBtn = document.getElementById('action-logout-trigger');
+if(logoutNavBtn) logoutNavBtn.addEventListener('click', doLogout);
 
 document.getElementById('btn-forgot').addEventListener('click',()=>{ closeModal('auth-system-overlay'); openModal('recovery-modal'); });
 document.getElementById('btn-send-recovery').addEventListener('click',()=>{
@@ -197,9 +218,9 @@ document.getElementById('close-qr-modal').addEventListener('click',()=>closeModa
 document.getElementById('btn-regenerate-qr').addEventListener('click',()=>{ genQR(); showToast('🔄 Nuevo QR generado','info'); });
 document.getElementById('qr-modal-overlay').addEventListener('click',e=>{ if(e.target.id==='qr-modal-overlay') closeModal('qr-modal-overlay'); });
 
-document.getElementById('footer-contacto').addEventListener('click',e=>{ e.preventDefault(); openModal('modal-contacto'); });
-document.getElementById('footer-privacidad').addEventListener('click',e=>{ e.preventDefault(); openModal('modal-privacidad'); });
-document.getElementById('footer-terminos').addEventListener('click',e=>{ e.preventDefault(); openModal('modal-terminos'); });
+const _el_footer_contacto=document.getElementById('footer-contacto');if(_el_footer_contacto) _el_footer_contacto.addEventListener('click',e=>{ e.preventDefault(); openModal('modal-contacto'); });
+const _el_footer_privacidad=document.getElementById('footer-privacidad');if(_el_footer_privacidad) _el_footer_privacidad.addEventListener('click',e=>{ e.preventDefault(); openModal('modal-privacidad'); });
+const _el_footer_terminos=document.getElementById('footer-terminos');if(_el_footer_terminos) _el_footer_terminos.addEventListener('click',e=>{ e.preventDefault(); openModal('modal-terminos'); });
 ['modal-contacto','modal-privacidad','modal-terminos'].forEach(id=>{
     document.getElementById(id).addEventListener('click',e=>{ if(e.target.id===id) closeModal(id); });
 });
@@ -223,17 +244,17 @@ document.getElementById('btn-send-contact').addEventListener('click',()=>{
     showToast('✅ ¡Mensaje enviado!','success');
 });
 
-document.getElementById('btn-ver-recicladores').addEventListener('click',()=>openModal('modal-recicladores'));
-document.getElementById('modal-recicladores').addEventListener('click',e=>{ if(e.target.id==='modal-recicladores') closeModal('modal-recicladores'); });
+const _bvr=document.getElementById('btn-ver-recicladores'); if(_bvr) _bvr.addEventListener('click',()=>openModal('modal-recicladores'));
+const _mr=document.getElementById('modal-recicladores'); if(_mr) _mr.addEventListener('click',e=>{ if(e.target.id==='modal-recicladores') closeModal('modal-recicladores'); });
 
 document.getElementById('btn-red-local').addEventListener('click',()=>openModal('modal-descuentos'));
-document.getElementById('modal-descuentos').addEventListener('click',e=>{ if(e.target.id==='modal-descuentos') closeModal('modal-descuentos'); });
+const _md=document.getElementById('modal-descuentos'); if(_md) _md.addEventListener('click',e=>{ if(e.target.id==='modal-descuentos') closeModal('modal-descuentos'); });
 
 document.getElementById('btn-ver-horarios').addEventListener('click',()=>openModal('modal-horarios'));
-document.getElementById('modal-horarios').addEventListener('click',e=>{ if(e.target.id==='modal-horarios') closeModal('modal-horarios'); });
+const _mh=document.getElementById('modal-horarios'); if(_mh) _mh.addEventListener('click',e=>{ if(e.target.id==='modal-horarios') closeModal('modal-horarios'); });
 
-document.getElementById('btn-navegar-parada').addEventListener('click',()=>openModal('modal-navegar'));
-document.getElementById('modal-navegar').addEventListener('click',e=>{ if(e.target.id==='modal-navegar') closeModal('modal-navegar'); });
+const _bnp=document.getElementById('btn-navegar-parada'); if(_bnp) _bnp.addEventListener('click',()=>openModal('modal-navegar'));
+const _mn=document.getElementById('modal-navegar'); if(_mn) _mn.addEventListener('click',e=>{ if(e.target.id==='modal-navegar') closeModal('modal-navegar'); });
 
 function openStoreModal(platform){
     const isIOS=platform==='ios';
@@ -248,9 +269,9 @@ function openStoreModal(platform){
     };
     openModal('modal-store');
 }
-document.getElementById('btn-ios').addEventListener('click',()=>openStoreModal('ios'));
-document.getElementById('btn-android').addEventListener('click',()=>openStoreModal('android'));
-document.getElementById('modal-store').addEventListener('click',e=>{ if(e.target.id==='modal-store') closeModal('modal-store'); });
+const _ios=document.getElementById('btn-ios'); if(_ios) _ios.addEventListener('click',()=>openStoreModal('ios'));
+const _and=document.getElementById('btn-android'); if(_and) _and.addEventListener('click',()=>openStoreModal('android'));
+const _ms=document.getElementById('modal-store'); if(_ms) _ms.addEventListener('click',e=>{ if(e.target.id==='modal-store') closeModal('modal-store'); });
 
 updateCtx();
 
@@ -284,15 +305,7 @@ setDashDates();
 
 ['action-logout-trigger2','action-logout-trigger3','action-logout-trigger4'].forEach(id=>{
     const el=document.getElementById(id);
-    if(el) el.addEventListener('click',()=>{
-        document.getElementById('session-active-area').classList.add('hidden');
-        document.getElementById('auth-btn-group').classList.remove('hidden');
-        document.getElementById('desktop-nav').classList.remove('hidden');
-        ['dash-ciudadano','dash-reciclador','dash-admin'].forEach(d=>document.getElementById(d).classList.add('hidden'));
-        document.getElementById('landing-page').classList.remove('hidden');
-        showToast('👋 Sesión cerrada correctamente.','info');
-        window.scrollTo({top:0,behavior:'smooth'});
-    });
+    if(el) el.addEventListener('click', doLogout);
 });
 
 function genQRReciclador(){

@@ -39,7 +39,6 @@
             <div id="session-active-area" class="hidden">
                 <div class="session-active-badge">
                     <span id="session-user-info" class="session-user-info"></span>
-                    <button class="btn-session-logout" id="action-logout-trigger">Salir</button>
                 </div>
             </div>
         </div>
@@ -331,7 +330,8 @@
 <div class="dash-wrapper">
   <aside class="dash-sidebar">
     <div class="dash-logo"><img src="1.jpg" alt="logo" class="brand-logo-img"></div>
-    <nav class="dash-nav">
+    <div class="dash-sidebar-toggle" id="toggle-dc" onclick="toggleSidebar('dc')">☰ Menú del panel <span>▾</span></div>
+    <nav class="dash-nav" id="nav-dc">
       <a href="#" class="dash-link active" onclick="dashTab(event,'dc-home')">🏠 Inicio</a>
       <a href="#" class="dash-link" onclick="dashTab(event,'dc-solicitar')">📦 Solicitar Recojo</a>
       <a href="#" class="dash-link" onclick="dashTab(event,'dc-puntos')">💳 ReciPuntos</a>
@@ -629,7 +629,8 @@
 <div class="dash-wrapper">
   <aside class="dash-sidebar">
     <div class="dash-logo"><img src="1.jpg" alt="logo" class="brand-logo-img"></div>
-    <nav class="dash-nav">
+    <div class="dash-sidebar-toggle" id="toggle-dr" onclick="toggleSidebar('dr')">☰ Menú del panel <span>▾</span></div>
+    <nav class="dash-nav" id="nav-dr">
       <a href="#" class="dash-link active" onclick="dashTab(event,'dr-home')">🏠 Dashboard</a>
       <a href="#" class="dash-link" onclick="dashTab(event,'dr-solicitudes')">📋 Solicitudes</a>
       <a href="#" class="dash-link" onclick="dashTab(event,'dr-ruta')">🗺️ Mi Ruta</a>
@@ -723,8 +724,8 @@
 
     <section id="dr-historial" class="dash-tab">
       <div class="dash-topbar"><h2>📊 Historial de recojos</h2></div>
-      <div class="dash-panel">
-        <table class="dash-table">
+      <div class="dash-panel" style="overflow-x:auto;">
+        <table class="dash-table" style="min-width:540px;">
           <thead><tr><th>Fecha</th><th>Ciudadano</th><th>Material</th><th>Peso</th><th>Estado</th><th>Calificación</th></tr></thead>
           <tbody>
             <tr><td>20/06</td><td>Rosa C.</td><td>Plástico</td><td>3 kg</td><td><span class="badge-status en-proceso">En proceso</span></td><td>—</td></tr>
@@ -738,15 +739,15 @@
 
     <section id="dr-qr" class="dash-tab">
       <div class="dash-topbar"><h2>🔲 Mi Código QR de Identificación</h2></div>
-      <div style="display:flex;gap:24px;flex-wrap:wrap;">
-        <div class="dash-panel" style="text-align:center;max-width:320px;">
+      <div style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center;align-items:flex-start;">
+        <div class="dash-panel" style="text-align:center;max-width:320px;width:100%;">
           <p style="font-size:13px;color:var(--slate-text);margin-bottom:16px;">Muestra este código a ciudadanos y centros de acopio para verificar tu identidad.</p>
           <div style="background:#F1F5F9;padding:20px;border-radius:12px;display:inline-block;margin-bottom:14px;"><div id="dr-qr-display"></div></div>
           <div style="font-size:12px;background:#F8FAFC;padding:8px;border-radius:6px;margin-bottom:14px;">TOKEN: <span id="dr-qr-token">—</span></div>
           <button class="btn-refresh-qr" onclick="genQRReciclador()">🔄 Regenerar QR</button>
           <p style="font-size:11px;color:var(--slate-text);margin-top:10px;">✅ Disponible sin conexión (guardado en caché)</p>
         </div>
-        <div class="dash-panel" style="flex:1;min-width:220px;">
+        <div class="dash-panel" style="flex:1;min-width:220px;max-width:360px;width:100%;">
           <h3>Tu información verificada</h3>
           <div class="perfil-header" style="margin:14px 0;"><div class="perfil-avatar">🚛</div><div><strong id="dr-qr-name"></strong><br><small style="color:var(--slate-text);">Reciclador Independiente</small><br><span class="recycler-badge" style="margin-top:4px;">✅ Cuenta verificada</span></div></div>
           <div class="impact-row"><div class="impact-item dr-impact-green"><div class="ii-val">42</div><div class="ii-lbl">Recojos</div></div><div class="impact-item dr-impact-green"><div class="ii-val">⭐ 4.9</div><div class="ii-lbl">Calificación</div></div><div class="impact-item dr-impact-green"><div class="ii-val">Surco</div><div class="ii-lbl">Zona</div></div></div>
@@ -788,7 +789,8 @@
 <div class="dash-wrapper">
   <aside class="dash-sidebar">
     <div class="dash-logo"><img src="1.jpg" alt="logo" class="brand-logo-img"></div>
-    <nav class="dash-nav">
+    <div class="dash-sidebar-toggle" id="toggle-da" onclick="toggleSidebar('da')">☰ Menú del panel <span>▾</span></div>
+    <nav class="dash-nav" id="nav-da">
       <a href="#" class="dash-link active" onclick="dashTab(event,'da-home')">🏠 Panel Central</a>
       <a href="#" class="dash-link" onclick="dashTab(event,'da-transacciones')">💰 Transacciones</a>
       <a href="#" class="dash-link" onclick="dashTab(event,'da-inventario')">📦 Inventario</a>
@@ -1016,10 +1018,6 @@
                     </div>
                 </div>
                 <div id="extra-reciclador" class="extra-fields-section hidden">
-                    <div class="form-input-group">
-                        <label for="reg-rec-code">Código de Reciclador</label>
-                        <input type="text" id="reg-rec-code" placeholder="Ej. REC-2026-X">
-                    </div>
                     <div class="form-double-row">
                         <div class="form-input-group flex-item">
                             <label for="reg-district">Distrito de Cobertura</label>
@@ -1035,11 +1033,23 @@
                             <input type="tel" id="reg-phone" placeholder="999888777">
                         </div>
                     </div>
+                    <div class="remember-row">
+                        <input type="checkbox" id="chk-independiente" onchange="toggleAsociacion(this)">
+                        <label for="chk-independiente">Soy Reciclador Independiente</label>
+                    </div>
+                    <div class="form-input-group" id="campo-asociacion">
+                        <label for="reg-asociacion">Asociación</label>
+                        <input type="text" id="reg-asociacion" placeholder="Ingrese nombre de su asociación">
+                    </div>
                 </div>
                 <div id="extra-admin" class="extra-fields-section hidden">
                     <div class="form-input-group">
-                        <label for="reg-license">Número de Licencia de Acopio</label>
-                        <input type="text" id="reg-license" placeholder="Ej. LIC-2026-LIMA">
+                        <label for="reg-license">RUC del centro de acopio</label>
+                        <input type="text" id="reg-license" placeholder="Ej. 10456789123">
+                    </div>
+                    <div class="form-input-group">
+                        <label for="reg-direccion">Dirección física del centro de acopio</label>
+                        <input type="text" id="reg-direccion" placeholder="Ej. Av. Separadora Industrial 140, Ate">
                     </div>
                 </div>
                 <button type="submit" class="btn-submit-auth" id="btn-reg-txt">Crear Cuenta</button>
